@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -47,8 +47,7 @@ export default function OrdersView() {
   const [newItemProduct, setNewItemProduct] = useState('')
   const [newItemQty, setNewItemQty] = useState(1)
 
-  const fetchOrders = useCallback(() => {
-    setLoading(true)
+  useEffect(() => {
     const params = new URLSearchParams()
     if (statusFilter !== 'ALL') params.set('status', statusFilter)
     if (search) params.set('q', search)
@@ -58,7 +57,16 @@ export default function OrdersView() {
       .catch(() => setLoading(false))
   }, [statusFilter, search])
 
-  useEffect(() => { fetchOrders() }, [fetchOrders])
+  const refetchOrders = () => {
+    setLoading(true)
+    const params = new URLSearchParams()
+    if (statusFilter !== 'ALL') params.set('status', statusFilter)
+    if (search) params.set('q', search)
+    fetch(`/api/orders?${params}`)
+      .then(r => r.json())
+      .then(r => { setOrders(r.data || []); setLoading(false) })
+      .catch(() => setLoading(false))
+  }
 
   useEffect(() => {
     fetch('/api/customers?limit=100').then(r => r.json()).then(r => setCustomers(r.data || [])).catch(() => {})
@@ -91,7 +99,7 @@ export default function OrdersView() {
       toast.success('Pesanan berhasil dibuat!')
       setDialogOpen(false)
       setSelectedCustomer(''); setOrderNotes(''); setOrderItems([])
-      fetchOrders()
+      refetchOrders()
     } catch (e: any) { toast.error(e.message || 'Gagal membuat pesanan') }
   }
 
@@ -99,7 +107,7 @@ export default function OrdersView() {
     try {
       await fetch(`/api/orders/${orderId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status }) })
       toast.success(`Status diperbarui ke ${getStatusLabel(status)}`)
-      fetchOrders()
+      refetchOrders()
       if (detailOpen) {
         const res = await fetch(`/api/orders/${orderId}`)
         const data = await res.json()
@@ -112,7 +120,7 @@ export default function OrdersView() {
     try {
       await fetch(`/api/orders/${id}`, { method: 'DELETE' })
       toast.success('Pesanan berhasil dihapus')
-      fetchOrders(); setDetailOpen(null)
+      refetchOrders(); setDetailOpen(null)
     } catch { toast.error('Gagal menghapus pesanan') }
   }
 

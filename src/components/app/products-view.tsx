@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -42,8 +42,7 @@ export default function ProductsView() {
   const [editing, setEditing] = useState<Product | null>(null)
   const [form, setForm] = useState({ name: '', category: '', unit: '', buyPrice: 0, sellPrice: 0, stock: 0, minStock: 10 })
 
-  const fetchProducts = useCallback(() => {
-    setLoading(true)
+  useEffect(() => {
     const params = new URLSearchParams()
     if (search) params.set('q', search)
     if (categoryFilter !== 'ALL') params.set('category', categoryFilter)
@@ -53,7 +52,16 @@ export default function ProductsView() {
       .catch(() => setLoading(false))
   }, [search, categoryFilter])
 
-  useEffect(() => { fetchProducts() }, [fetchProducts])
+  const refetchProducts = () => {
+    setLoading(true)
+    const params = new URLSearchParams()
+    if (search) params.set('q', search)
+    if (categoryFilter !== 'ALL') params.set('category', categoryFilter)
+    fetch(`/api/products?${params}`)
+      .then(r => r.json())
+      .then(r => { setProducts(r.data || []); setLoading(false) })
+      .catch(() => setLoading(false))
+  }
 
   const handleSubmit = async () => {
     if (!form.name || !form.category || !form.unit) {
@@ -71,7 +79,7 @@ export default function ProductsView() {
       setDialogOpen(false)
       setEditing(null)
       setForm({ name: '', category: '', unit: '', buyPrice: 0, sellPrice: 0, stock: 0, minStock: 10 })
-      fetchProducts()
+      refetchProducts()
     } catch {
       toast.error('Gagal menyimpan produk')
     }
@@ -87,7 +95,7 @@ export default function ProductsView() {
     try {
       await fetch(`/api/products/${id}`, { method: 'DELETE' })
       toast.success('Produk berhasil dihapus')
-      fetchProducts()
+      refetchProducts()
       setDeleteDialog(null)
     } catch {
       toast.error('Gagal menghapus produk')

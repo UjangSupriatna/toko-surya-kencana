@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -34,8 +34,7 @@ export default function InvoicesView() {
   const [statusFilter, setStatusFilter] = useState('ALL')
   const [selected, setSelected] = useState<Invoice | null>(null)
 
-  const fetchInvoices = useCallback(() => {
-    setLoading(true)
+  useEffect(() => {
     const params = new URLSearchParams()
     if (statusFilter !== 'ALL') params.set('status', statusFilter)
     fetch(`/api/invoices?${params}`)
@@ -44,13 +43,21 @@ export default function InvoicesView() {
       .catch(() => setLoading(false))
   }, [statusFilter])
 
-  useEffect(() => { fetchInvoices() }, [fetchInvoices])
+  const refetchInvoices = () => {
+    setLoading(true)
+    const params = new URLSearchParams()
+    if (statusFilter !== 'ALL') params.set('status', statusFilter)
+    fetch(`/api/invoices?${params}`)
+      .then(r => r.json())
+      .then(r => { setInvoices(r.data || []); setLoading(false) })
+      .catch(() => setLoading(false))
+  }
 
   const markAsPaid = async (id: string) => {
     try {
       await fetch(`/api/invoices/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'PAID' }) })
       toast.success('Invoice ditandai lunas')
-      fetchInvoices()
+      refetchInvoices()
       if (selected?.id === id) {
         const res = await fetch(`/api/invoices/${id}`)
         const data = await res.json()

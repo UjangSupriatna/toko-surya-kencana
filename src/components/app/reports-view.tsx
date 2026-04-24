@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import {
@@ -10,17 +9,21 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip,
   ResponsiveContainer, Legend
 } from 'recharts'
-import { TrendingUp, TrendingDown, DollarSign, ShoppingCart, Package, Users } from 'lucide-react'
-import { formatRupiah, formatNumber } from '@/lib/format'
+import { DollarSign, ShoppingCart, Package, Users } from 'lucide-react'
+import { formatRupiah, formatNumber, getCustomerTypeLabel } from '@/lib/format'
 
 interface ReportData {
-  totalRevenue: number; totalExpense: number; totalProfit: number
-  totalOrders: number; totalCustomers: number; avgOrderValue: number
-  topSellingProducts: { productId: string; productName: string; totalQty: number; totalRevenue: number }[]
+  totalRevenue: number
+  totalExpense: number
+  totalProfit: number
+  totalOrders: number
+  totalCustomers: number
+  avgOrderValue: number
+  topSellingProducts: { product: { id: string; name: string; category: string } | null; totalSold: number }[]
   monthlyRevenue: { month: string; revenue: number }[]
   monthlyExpenses: { month: string; expense: number }[]
   expenseByCategory: { category: string; total: number }[]
-  customerStats: { type: string; count: number }[]
+  customerStats: Record<string, number>
   lowStockProducts: number
 }
 
@@ -56,7 +59,14 @@ export default function ReportsView() {
     Laba: r.revenue - (data.monthlyExpenses[i]?.expense || 0),
   }))
 
-  const cogs = data.totalRevenue * 0.65 // estimated COGS
+  const topProductsForChart = data.topSellingProducts.slice(0, 7).map(p => ({
+    productName: p.product?.name || 'Produk',
+    totalSold: p.totalSold,
+  }))
+
+  const customerStatsArray = Object.entries(data.customerStats).map(([type, count]) => ({ type, count }))
+
+  const cogs = data.totalRevenue * 0.65
   const grossProfit = data.totalRevenue - cogs
   const netProfit = grossProfit - data.totalExpense
   const profitMargin = data.totalRevenue > 0 ? Math.round(netProfit / data.totalRevenue * 100) : 0
@@ -219,12 +229,12 @@ export default function ReportsView() {
           <CardHeader className="pb-2"><CardTitle className="text-base">Produk Terlaris</CardTitle></CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={data.topSellingProducts.slice(0, 7)} layout="vertical">
+              <BarChart data={topProductsForChart} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                 <XAxis type="number" tick={{ fontSize: 11 }} />
                 <YAxis dataKey="productName" type="category" width={140} tick={{ fontSize: 11 }} />
-                <RechartsTooltip formatter={(v: number, name: string) => name === 'totalQty' ? [`${v} unit`, 'Terjual'] : [formatRupiah(v), 'Pendapatan']} />
-                <Bar dataKey="totalQty" fill="#059669" radius={[0, 4, 4, 0]} name="Terjual" />
+                <RechartsTooltip formatter={(v: number, name: string) => name === 'totalSold' ? [`${v} unit`, 'Terjual'] : [formatRupiah(v), 'Pendapatan']} />
+                <Bar dataKey="totalSold" fill="#059669" radius={[0, 4, 4, 0]} name="Terjual" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -236,10 +246,10 @@ export default function ReportsView() {
         <CardHeader className="pb-2"><CardTitle className="text-base">Distribusi Pelanggan</CardTitle></CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {data.customerStats.map((cs: any) => (
+            {customerStatsArray.map((cs) => (
               <div key={cs.type} className="text-center p-4 bg-muted/50 rounded-lg">
                 <p className="text-2xl font-bold">{cs.count}</p>
-                <p className="text-sm text-muted-foreground">{cs.type === 'DAPUR' ? 'Dapur SPPG' : cs.type === 'ECERAN' ? 'Eceran' : cs.type === 'GROSIR' ? 'Grosir' : cs.type}</p>
+                <p className="text-sm text-muted-foreground">{getCustomerTypeLabel(cs.type)}</p>
                 <p className="text-xs text-muted-foreground">{data.totalCustomers > 0 ? Math.round(cs.count / data.totalCustomers * 100) : 0}% dari total</p>
               </div>
             ))}

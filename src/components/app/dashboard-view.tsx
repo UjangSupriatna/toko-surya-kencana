@@ -18,15 +18,14 @@ interface ReportData {
   totalProfit: number
   totalOrders: number
   pendingOrders: number
-  unpaidInvoices: number
-  unpaidInvoiceTotal: number
+  unpaidInvoices: { count: number; total: number }
   lowStockProducts: number
-  topSellingProducts: { productId: string; productName: string; totalQty: number; totalRevenue: number }[]
+  topSellingProducts: { product: { id: string; name: string; category: string } | null; totalSold: number }[]
   monthlyRevenue: { month: string; revenue: number }[]
   monthlyExpenses: { month: string; expense: number }[]
   expenseByCategory: { category: string; total: number }[]
-  recentOrders: any[]
-  customerStats: { type: string; count: number }[]
+  recentOrders: { id: string; orderNumber: string; status: string; totalAmount: number; createdAt: string; customer: { id: string; name: string; type: string; phone: string } | null }[]
+  customerStats: Record<string, number>
   totalCustomers: number
   avgOrderValue: number
 }
@@ -66,6 +65,7 @@ export default function DashboardView() {
   }))
 
   const topProducts = data.topSellingProducts.slice(0, 5).reverse()
+  const customerStatsArray = Object.entries(data.customerStats).map(([type, count]) => ({ type, count }))
 
   return (
     <div className="space-y-6">
@@ -128,8 +128,8 @@ export default function DashboardView() {
               <div>
                 <p className="text-sm text-muted-foreground">Total Pelanggan</p>
                 <p className="text-2xl font-bold">{formatNumber(data.totalCustomers)}</p>
-                {data.unpaidInvoices > 0 && (
-                  <Badge variant="secondary" className="mt-1 text-xs bg-red-100 text-red-800">{data.unpaidInvoices} invoice belum bayar</Badge>
+                {data.unpaidInvoices.count > 0 && (
+                  <Badge variant="secondary" className="mt-1 text-xs bg-red-100 text-red-800">{data.unpaidInvoices.count} invoice belum bayar</Badge>
                 )}
               </div>
               <div className="h-10 w-10 rounded-full bg-cyan-100 flex items-center justify-center">
@@ -166,7 +166,7 @@ export default function DashboardView() {
         <Card>
           <CardContent className="p-4 text-center">
             <AlertTriangle className="h-5 w-5 mx-auto text-amber-500 mb-1" />
-            <p className="text-lg font-bold text-red-600">{formatRupiah(data.unpaidInvoiceTotal)}</p>
+            <p className="text-lg font-bold text-red-600">{formatRupiah(data.unpaidInvoices.total)}</p>
             <p className="text-xs text-muted-foreground">Invoice Belum Bayar</p>
           </CardContent>
         </Card>
@@ -241,7 +241,7 @@ export default function DashboardView() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {data.recentOrders.slice(0, 5).map((order: any) => (
+              {data.recentOrders.slice(0, 5).map((order) => (
                 <div key={order.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-sm truncate">{order.orderNumber}</p>
@@ -268,7 +268,7 @@ export default function DashboardView() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {data.customerStats.map((cs: any) => (
+                {customerStatsArray.map((cs) => (
                   <div key={cs.type} className="flex items-center justify-between">
                     <Badge variant="outline" className={getCustomerTypeColor(cs.type)}>
                       {getCustomerTypeLabel(cs.type)}
@@ -287,12 +287,12 @@ export default function DashboardView() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {topProducts.map((p: any, i: number) => (
-                  <div key={p.productId} className="flex items-center gap-3">
+                {topProducts.map((p, i) => (
+                  <div key={p.product?.id || i} className="flex items-center gap-3">
                     <span className="text-xs font-bold text-muted-foreground w-5">#{i + 1}</span>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-medium truncate">{p.productName}</p>
-                      <p className="text-[10px] text-muted-foreground">{formatNumber(p.totalQty)} terjual</p>
+                      <p className="text-xs font-medium truncate">{p.product?.name || 'Produk'}</p>
+                      <p className="text-[10px] text-muted-foreground">{formatNumber(p.totalSold)} terjual</p>
                     </div>
                   </div>
                 ))}

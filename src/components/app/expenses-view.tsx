@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -31,8 +31,7 @@ export default function ExpensesView() {
   const [editing, setEditing] = useState<Expense | null>(null)
   const [form, setForm] = useState({ category: 'Operasional', description: '', amount: 0, date: new Date().toISOString().split('T')[0] })
 
-  const fetchExpenses = useCallback(() => {
-    setLoading(true)
+  useEffect(() => {
     const params = new URLSearchParams()
     if (categoryFilter !== 'ALL') params.set('category', categoryFilter)
     fetch(`/api/expenses?${params}`)
@@ -48,7 +47,22 @@ export default function ExpensesView() {
       .catch(() => setLoading(false))
   }, [search, categoryFilter])
 
-  useEffect(() => { fetchExpenses() }, [fetchExpenses])
+  const refetchExpenses = () => {
+    setLoading(true)
+    const params = new URLSearchParams()
+    if (categoryFilter !== 'ALL') params.set('category', categoryFilter)
+    fetch(`/api/expenses?${params}`)
+      .then(r => r.json())
+      .then(r => {
+        let data = r.data || []
+        if (search) {
+          data = data.filter((e: Expense) => e.description.toLowerCase().includes(search.toLowerCase()) || e.category.toLowerCase().includes(search.toLowerCase()))
+        }
+        setExpenses(data)
+        setLoading(false)
+      })
+      .catch(() => setLoading(false))
+  }
 
   const today = new Date()
   const thisMonth = expenses.filter(e => { const d = new Date(e.date); return d.getMonth() === today.getMonth() && d.getFullYear() === today.getFullYear() })
@@ -71,7 +85,7 @@ export default function ExpensesView() {
       }
       setDialogOpen(false); setEditing(null)
       setForm({ category: 'Operasional', description: '', amount: 0, date: new Date().toISOString().split('T')[0] })
-      fetchExpenses()
+      refetchExpenses()
     } catch { toast.error('Gagal menyimpan pengeluaran') }
   }
 
@@ -85,7 +99,7 @@ export default function ExpensesView() {
     try {
       await fetch(`/api/expenses/${id}`, { method: 'DELETE' })
       toast.success('Pengeluaran berhasil dihapus')
-      fetchExpenses(); setDeleteDialog(null)
+      refetchExpenses(); setDeleteDialog(null)
     } catch { toast.error('Gagal menghapus') }
   }
 

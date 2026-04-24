@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -31,8 +31,7 @@ export default function CustomersView() {
   const [editing, setEditing] = useState<Customer | null>(null)
   const [form, setForm] = useState({ name: '', phone: '', address: '', type: 'DAPUR' })
 
-  const fetchCustomers = useCallback(() => {
-    setLoading(true)
+  useEffect(() => {
     const params = new URLSearchParams()
     if (search) params.set('q', search)
     if (typeFilter !== 'ALL') params.set('type', typeFilter)
@@ -42,7 +41,16 @@ export default function CustomersView() {
       .catch(() => setLoading(false))
   }, [search, typeFilter])
 
-  useEffect(() => { fetchCustomers() }, [fetchCustomers])
+  const refetchCustomers = () => {
+    setLoading(true)
+    const params = new URLSearchParams()
+    if (search) params.set('q', search)
+    if (typeFilter !== 'ALL') params.set('type', typeFilter)
+    fetch(`/api/customers?${params}`)
+      .then(r => r.json())
+      .then(r => { setCustomers(r.data || []); setLoading(false) })
+      .catch(() => setLoading(false))
+  }
 
   const handleSubmit = async () => {
     if (!form.name || !form.phone) { toast.error('Nama dan nomor telepon wajib diisi'); return }
@@ -56,7 +64,7 @@ export default function CustomersView() {
       }
       setDialogOpen(false); setEditing(null)
       setForm({ name: '', phone: '', address: '', type: 'DAPUR' })
-      fetchCustomers()
+      refetchCustomers()
     } catch { toast.error('Gagal menyimpan pelanggan') }
   }
 
@@ -70,7 +78,7 @@ export default function CustomersView() {
     try {
       await fetch(`/api/customers/${id}`, { method: 'DELETE' })
       toast.success('Pelanggan berhasil dihapus')
-      fetchCustomers(); setDeleteDialog(null)
+      refetchCustomers(); setDeleteDialog(null)
     } catch { toast.error('Gagal menghapus pelanggan. Mungkin masih memiliki pesanan.') }
   }
 
