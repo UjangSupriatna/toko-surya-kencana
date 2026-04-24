@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
+import { readData, writeData } from '@/lib/json-db'
+import type { Payment } from '@/lib/types'
 
 function generatePaymentNumber(): string {
   const now = new Date()
@@ -18,33 +19,36 @@ export async function GET(request: NextRequest) {
     const from = searchParams.get('from') || ''
     const to = searchParams.get('to') || ''
 
-    const where: Record<string, unknown> = {}
+    const data = await readData()
+    let payments = [...data.payments]
 
-    if (from || to) {
-      where.date = {}
-      if (from) {
-        (where.date as Record<string, unknown>).gte = new Date(from)
-      }
-      if (to) {
-        const endDate = new Date(to)
-        endDate.setHours(23, 59, 59, 999)
-        ;(where.date as Record<string, unknown>).lte = endDate
-      }
+    if (from) {
+      const fromDate = new Date(from)
+      payments = payments.filter(p => new Date(p.date) >= fromDate)
+    }
+    if (to) {
+      const toDate = new Date(to)
+      toDate.setHours(23, 59, 59, 999)
+      payments = payments.filter(p => new Date(p.date) <= toDate)
     }
 
-    const payments = await db.payment.findMany({
-      where,
-      orderBy: { date: 'desc' },
-      include: {
-        order: {
-          include: {
-            customer: true,
-          },
-        },
-      },
+    // Sort by date desc
+    payments.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+    // Enrich with order info (customer)
+    const enrichedPayments = payments.map(payment => {
+      const order = data.orders.find(o => o.id === payment.orderId)
+      const customer = order ? data.customers.find(c => c.id === order.customerId) : null
+      return {
+        ...payment,
+        order: order ? {
+          ...order,
+          customer: customer || null,
+        } : null,
+      }
     })
 
-    return NextResponse.json({ data: payments })
+    return NextResponse.json({ data: enrichedPayments })
   } catch (error) {
     console.error('Error listing payments:', error)
     return NextResponse.json(
@@ -83,10 +87,8 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const order = await db.order.findUnique({
-      where: { id: orderId },
-      include: { invoice: true, payments: true },
-    })
+    const data = await readData()
+    const order = data.orders.find(o => o.id === orderId)
 
     if (!order) {
       return NextResponse.json(
@@ -95,48 +97,47 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const payment = await db.$transaction(async (tx) => {
-      const newPayment = await tx.payment.create({
-        data: {
-          paymentNumber: generatePaymentNumber(),
-          orderId,
-          amount: Math.round(amount),
-          method: method || 'TRANSFER',
-          date: date ? new Date(date) : new Date(),
-          notes: notes || null,
-        },
-        include: {
-          order: {
-            include: {
-              customer: true,
-            },
-          },
-        },
-      })
+    const now = new Date().toISOString()
 
-      // Calculate total payments for this order
-      const allPayments = await tx.payment.findMany({
-        where: { orderId },
-      })
+    const newPayment: Payment = {
+      id: `pay-${Date.now()}`,
+      paymentNumber: generatePaymentNumber(),
+      orderId,
+      amount: Math.round(amount),
+      method: method || 'TRANSFER',
+      date: date ? new Date(date).toISOString() : now,
+      notes: notes || null,
+    }
 
-      const totalPaid = allPayments.reduce((sum, p) => sum + p.amount, 0)
-      const orderTotal = order.totalAmount
+    data.payments.push(newPayment)
 
-      // If total payments >= order total, auto-update invoice to PAID
-      if (totalPaid >= orderTotal && order.invoice) {
-        await tx.invoice.update({
-          where: { id: order.invoice.id },
-          data: {
-            status: 'PAID',
-            paidAt: new Date(),
-          },
-        })
+    // Calculate total payments for this order
+    const allPayments = data.payments.filter(p => p.orderId === orderId)
+    const totalPaid = allPayments.reduce((sum, p) => sum + p.amount, 0)
+
+    // If total payments >= order total, auto-update invoice to PAID
+    if (totalPaid >= order.totalAmount) {
+      const invoiceIdx = data.invoices.findIndex(i => i.orderId === orderId)
+      if (invoiceIdx !== -1 && data.invoices[invoiceIdx].status !== 'PAID') {
+        data.invoices[invoiceIdx].status = 'PAID'
+        data.invoices[invoiceIdx].paidAt = now
       }
+    }
 
-      return newPayment
-    })
+    await writeData(data)
 
-    return NextResponse.json({ data: payment }, { status: 201 })
+    // Enrich response
+    const customer = data.customers.find(c => c.id === order.customerId)
+
+    return NextResponse.json({
+      data: {
+        ...newPayment,
+        order: {
+          ...order,
+          customer: customer || null,
+        },
+      },
+    }, { status: 201 })
   } catch (error) {
     console.error('Error creating payment:', error)
     return NextResponse.json(

@@ -4,20 +4,37 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import {
   Store, Package, ShoppingCart, Receipt, Users, Wallet,
   BarChart3, Phone, MapPin, Clock, ChevronRight, CheckCircle2,
   ArrowRight, Truck, FileText, Calculator, Shield, Zap,
-  Star, Menu, X, Send
+  Star, Menu, X, Send, LayoutDashboard, ArrowLeft, CircleUser
 } from 'lucide-react'
+import DashboardView from '@/components/app/dashboard-view'
+import ProductsView from '@/components/app/products-view'
+import OrdersView from '@/components/app/orders-view'
+import InvoicesView from '@/components/app/invoices-view'
+import CustomersView from '@/components/app/customers-view'
+import ExpensesView from '@/components/app/expenses-view'
+import ReportsView from '@/components/app/reports-view'
+
+const DASHBOARD_NAV = [
+  { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { id: 'products', label: 'Produk & Inventaris', icon: Package },
+  { id: 'orders', label: 'Pesanan', icon: ShoppingCart },
+  { id: 'invoices', label: 'Faktur', icon: Receipt },
+  { id: 'customers', label: 'Pelanggan', icon: Users },
+  { id: 'expenses', label: 'Pengeluaran', icon: Wallet },
+  { id: 'reports', label: 'Laporan Keuangan', icon: BarChart3 },
+]
 
 export default function Home() {
+  const [view, setView] = useState<'landing' | 'dashboard'>('landing')
   const [mobileMenu, setMobileMenu] = useState(false)
-  const [demoDialog, setDemoDialog] = useState(false)
+  const [activeTab, setActiveTab] = useState('dashboard')
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const scrollTo = (id: string) => {
     setMobileMenu(false)
@@ -85,7 +102,137 @@ export default function Home() {
     { name: 'Enterprise', price: 'Hubungi Kami', period: '', desc: 'Untuk bisnis besar & franchise', features: ['Semua fitur Professional', 'Multi Lokasi/Gudang', 'API Integration', 'Priority Support', 'Training Tim', 'Custom Development'] },
   ]
 
-  return (
+  // ─── Dashboard Sidebar Nav ───
+  const renderSidebarNav = (onItemClick?: () => void) => (
+    <nav className="flex flex-col gap-1 px-3 py-4">
+      {DASHBOARD_NAV.map((item) => {
+        const Icon = item.icon
+        const isActive = activeTab === item.id
+        return (
+          <button
+            key={item.id}
+            onClick={() => { setActiveTab(item.id); onItemClick?.() }}
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              isActive
+                ? 'bg-emerald-50 text-emerald-700'
+                : 'text-gray-600 hover:bg-muted hover:text-foreground'
+            }`}
+          >
+            <Icon className={`h-5 w-5 ${isActive ? 'text-emerald-600' : ''}`} />
+            {item.label}
+          </button>
+        )
+      })}
+    </nav>
+  )
+
+  // ─── Dashboard View ───
+  const renderDashboard = () => {
+    const activeLabel = DASHBOARD_NAV.find(n => n.id === activeTab)?.label || 'Dashboard'
+
+    const renderContent = () => {
+      switch (activeTab) {
+        case 'products': return <ProductsView />
+        case 'orders': return <OrdersView />
+        case 'invoices': return <InvoicesView />
+        case 'customers': return <CustomersView />
+        case 'expenses': return <ExpensesView />
+        case 'reports': return <ReportsView />
+        default: return <DashboardView />
+      }
+    }
+
+    return (
+      <div className="min-h-screen flex flex-col bg-gray-50">
+        {/* Header */}
+        <header className="sticky top-0 z-40 bg-white border-b">
+          <div className="flex items-center justify-between h-14 px-4 lg:px-6">
+            <div className="flex items-center gap-3">
+              {/* Mobile menu */}
+              <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" className="lg:hidden">
+                    <Menu className="h-5 w-5" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-72 p-0">
+                  <div className="flex items-center gap-2 px-4 h-14 border-b">
+                    <div className="h-7 w-7 rounded-md bg-emerald-600 flex items-center justify-center">
+                      <Store className="h-4 w-4 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm leading-tight">Toko Surya Kencana</p>
+                      <p className="text-[10px] text-muted-foreground leading-tight">Admin Panel</p>
+                    </div>
+                  </div>
+                  {renderSidebarNav(() => setSidebarOpen(false))}
+                </SheetContent>
+              </Sheet>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setView('landing')}
+                className="hidden sm:inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground -ml-1"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Kembali ke Beranda
+              </Button>
+              <div className="hidden sm:block h-5 w-px bg-border" />
+              <h1 className="font-semibold text-sm">{activeLabel}</h1>
+            </div>
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setView('landing')}
+                className="sm:hidden inline-flex items-center gap-1.5 text-xs text-muted-foreground"
+              >
+                <ArrowLeft className="h-3.5 w-3.5" />
+                Beranda
+              </Button>
+              <div className="flex items-center gap-2">
+                <div className="h-8 w-8 rounded-full bg-emerald-100 flex items-center justify-center">
+                  <CircleUser className="h-5 w-5 text-emerald-700" />
+                </div>
+                <span className="hidden sm:inline text-sm font-medium">Admin</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div className="flex flex-1">
+          {/* Sidebar - Desktop */}
+          <aside className="hidden lg:flex lg:w-60 lg:flex-col lg:border-r bg-white">
+            <div className="flex items-center gap-2 px-4 h-14 border-b">
+              <div className="h-7 w-7 rounded-md bg-emerald-600 flex items-center justify-center">
+                <Store className="h-4 w-4 text-white" />
+              </div>
+              <div>
+                <p className="font-semibold text-sm leading-tight">Toko Surya Kencana</p>
+                <p className="text-[10px] text-muted-foreground leading-tight">Admin Panel</p>
+              </div>
+            </div>
+            {renderSidebarNav()}
+          </aside>
+
+          {/* Main Content */}
+          <main className="flex-1 p-4 lg:p-6 overflow-auto">
+            {renderContent()}
+          </main>
+        </div>
+
+        {/* Footer */}
+        <footer className="border-t bg-white py-3 px-4 lg:px-6">
+          <p className="text-xs text-muted-foreground text-center">
+            &copy; {new Date().getFullYear()} Toko Surya Kencana &mdash; Sistem Manajemen Supplier Sembako
+          </p>
+        </footer>
+      </div>
+    )
+  }
+
+  // ─── Landing View ───
+  const renderLanding = () => (
     <div className="min-h-screen bg-white">
       {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b">
@@ -107,8 +254,8 @@ export default function Home() {
               <button onClick={() => scrollTo('alur')} className="text-sm text-muted-foreground hover:text-foreground transition-colors">Alur Bisnis</button>
               <button onClick={() => scrollTo('harga')} className="text-sm text-muted-foreground hover:text-foreground transition-colors">Harga</button>
               <button onClick={() => scrollTo('kontak')} className="text-sm text-muted-foreground hover:text-foreground transition-colors">Kontak</button>
-              <Button onClick={() => setDemoDialog(true)} className="bg-emerald-600 hover:bg-emerald-700">
-                Minta Demo <ArrowRight className="h-4 w-4 ml-1" />
+              <Button onClick={() => setView('dashboard')} className="bg-emerald-600 hover:bg-emerald-700">
+                Lihat Demo <ArrowRight className="h-4 w-4 ml-1" />
               </Button>
             </div>
 
@@ -125,8 +272,8 @@ export default function Home() {
               <button onClick={() => scrollTo('alur')} className="block w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-muted">Alur Bisnis</button>
               <button onClick={() => scrollTo('harga')} className="block w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-muted">Harga</button>
               <button onClick={() => scrollTo('kontak')} className="block w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-muted">Kontak</button>
-              <Button onClick={() => { setDemoDialog(true); setMobileMenu(false) }} className="w-full bg-emerald-600 hover:bg-emerald-700 mt-2">
-                Minta Demo <ArrowRight className="h-4 w-4 ml-1" />
+              <Button onClick={() => { setView('dashboard'); setMobileMenu(false) }} className="w-full bg-emerald-600 hover:bg-emerald-700 mt-2">
+                Lihat Demo <ArrowRight className="h-4 w-4 ml-1" />
               </Button>
             </div>
           )}
@@ -154,9 +301,9 @@ export default function Home() {
               Aplikasi web lengkap untuk mengelola inventaris, pesanan, faktur, dan keuangan toko sembako Anda. Dirancang khusus untuk supplier yang melayani <strong>Dapur SPPG</strong>, toko eceran, dan grosir.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-base px-8 h-12" onClick={() => setDemoDialog(true)}>
+              <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-base px-8 h-12" onClick={() => setView('dashboard')}>
                 <Send className="h-5 w-5 mr-2" />
-                Minta Demo Gratis
+                Lihat Demo Gratis
               </Button>
               <Button size="lg" variant="outline" className="text-base px-8 h-12" onClick={() => scrollTo('fitur')}>
                 Lihat Fitur <ChevronRight className="h-4 w-4 ml-1" />
@@ -422,7 +569,7 @@ export default function Home() {
                   <Button
                     className={`w-full mt-6 ${p.popular ? 'bg-emerald-600 hover:bg-emerald-700' : ''}`}
                     variant={p.popular ? 'default' : 'outline'}
-                    onClick={() => setDemoDialog(true)}
+                    onClick={() => setView('dashboard')}
                   >
                     {p.price === 'Hubungi Kami' ? 'Hubungi Kami' : 'Pilih Paket'}
                   </Button>
@@ -488,9 +635,9 @@ export default function Home() {
             })}
           </div>
           <div className="text-center">
-            <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-base px-10 h-12" onClick={() => setDemoDialog(true)}>
+            <Button size="lg" className="bg-emerald-600 hover:bg-emerald-700 text-base px-10 h-12" onClick={() => setView('dashboard')}>
               <Send className="h-5 w-5 mr-2" />
-              Minta Demo Sekarang
+              Lihat Demo Sekarang
             </Button>
           </div>
         </div>
@@ -513,42 +660,8 @@ export default function Home() {
           </div>
         </div>
       </footer>
-
-      {/* Demo Request Dialog */}
-      <Dialog open={demoDialog} onOpenChange={setDemoDialog}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2"><Send className="h-5 w-5 text-emerald-600" /> Minta Demo Gratis</DialogTitle>
-            <DialogDescription>
-              Isi form di bawah ini untuk mendapatkan demo aplikasi dan konsultasi gratis dari tim kami.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4 py-2">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Nama Lengkap *</label>
-              <Input placeholder="Nama Anda" />
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Nomor WhatsApp *</label>
-              <Input placeholder="08xxxxxxxxxx" />
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Nama Toko</label>
-              <Input placeholder="Nama toko Anda" />
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Pesan (opsional)</label>
-              <Textarea placeholder="Ceritakan kebutuhan Anda..." />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setDemoDialog(false)}>Batal</Button>
-            <Button className="bg-emerald-600 hover:bg-emerald-700" onClick={() => { setDemoDialog(false) }}>
-              Kirim Permintaan <Send className="h-4 w-4 ml-1" />
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   )
+
+  return view === 'dashboard' ? renderDashboard() : renderLanding()
 }

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
+import { readData } from '@/lib/json-db'
 
 export async function GET(request: NextRequest) {
   try {
@@ -8,40 +8,41 @@ export async function GET(request: NextRequest) {
     const from = searchParams.get('from') || ''
     const to = searchParams.get('to') || ''
 
-    const where: Record<string, unknown> = {}
+    const data = await readData()
+    let history = [...data.stockHistory]
 
     if (productId) {
-      where.productId = productId
+      history = history.filter(h => h.productId === productId)
     }
 
-    if (from || to) {
-      where.createdAt = {}
-      if (from) {
-        (where.createdAt as Record<string, unknown>).gte = new Date(from)
-      }
-      if (to) {
-        const endDate = new Date(to)
-        endDate.setHours(23, 59, 59, 999)
-        ;(where.createdAt as Record<string, unknown>).lte = endDate
-      }
+    if (from) {
+      const fromDate = new Date(from)
+      history = history.filter(h => new Date(h.createdAt) >= fromDate)
+    }
+    if (to) {
+      const toDate = new Date(to)
+      toDate.setHours(23, 59, 59, 999)
+      history = history.filter(h => new Date(h.createdAt) <= toDate)
     }
 
-    const stockHistory = await db.stockHistory.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-      include: {
-        product: {
-          select: {
-            id: true,
-            name: true,
-            category: true,
-            unit: true,
-          },
-        },
-      },
+    // Sort by createdAt desc
+    history.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+
+    // Enrich with product name
+    const enrichedHistory = history.map(h => {
+      const product = data.products.find(p => p.id === h.productId)
+      return {
+        ...h,
+        product: product ? {
+          id: product.id,
+          name: product.name,
+          category: product.category,
+          unit: product.unit,
+        } : null,
+      }
     })
 
-    return NextResponse.json({ data: stockHistory })
+    return NextResponse.json({ data: enrichedHistory })
   } catch (error) {
     console.error('Error listing stock history:', error)
     return NextResponse.json(

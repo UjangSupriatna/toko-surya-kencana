@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
+import { readData, writeData } from '@/lib/json-db'
+import type { Invoice } from '@/lib/types'
 
 function generateInvoiceNumber(): string {
   const now = new Date()
@@ -16,24 +17,30 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url)
     const status = searchParams.get('status') || ''
 
-    const where: Record<string, unknown> = {}
+    const data = await readData()
+    let invoices = [...data.invoices]
+
     if (status) {
-      where.status = status
+      invoices = invoices.filter(i => i.status === status)
     }
 
-    const invoices = await db.invoice.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-      include: {
-        order: {
-          include: {
-            customer: true,
-          },
-        },
-      },
+    // Sort by createdAt desc
+    invoices.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+
+    // Enrich with order info (customer, totalAmount)
+    const enrichedInvoices = invoices.map(invoice => {
+      const order = data.orders.find(o => o.id === invoice.orderId)
+      const customer = order ? data.customers.find(c => c.id === order.customerId) : null
+      return {
+        ...invoice,
+        order: order ? {
+          ...order,
+          customer: customer || null,
+        } : null,
+      }
     })
 
-    return NextResponse.json({ data: invoices })
+    return NextResponse.json({ data: enrichedInvoices })
   } catch (error) {
     console.error('Error listing invoices:', error)
     return NextResponse.json(
@@ -55,11 +62,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Check if invoice already exists for this order
-    const existingInvoice = await db.invoice.findUnique({
-      where: { orderId },
-    })
+    const data = await readData()
 
+    // Check if invoice already exists for this order
+    const existingInvoice = data.invoices.find(i => i.orderId === orderId)
     if (existingInvoice) {
       return NextResponse.json(
         { error: 'Invoice sudah ada untuk pesanan ini' },
@@ -67,10 +73,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const order = await db.order.findUnique({
-      where: { id: orderId },
-    })
-
+    const order = data.orders.find(o => o.id === orderId)
     if (!order) {
       return NextResponse.json(
         { error: 'Pesanan tidak ditemukan' },
@@ -85,26 +88,36 @@ export async function POST(request: NextRequest) {
     const dueDate = new Date()
     dueDate.setDate(dueDate.getDate() + (typeof dueDateDays === 'number' ? dueDateDays : 30))
 
-    const invoice = await db.invoice.create({
+    const now = new Date().toISOString()
+
+    const newInvoice: Invoice = {
+      id: `inv-${Date.now()}`,
+      invoiceNumber: generateInvoiceNumber(),
+      orderId,
+      status: 'UNPAID',
+      ppnRate: taxRate,
+      ppnAmount,
+      totalAmount,
+      dueDate: dueDate.toISOString(),
+      paidAt: null,
+      createdAt: now,
+    }
+
+    data.invoices.push(newInvoice)
+    await writeData(data)
+
+    // Enrich with order info
+    const customer = data.customers.find(c => c.id === order.customerId)
+
+    return NextResponse.json({
       data: {
-        invoiceNumber: generateInvoiceNumber(),
-        orderId,
-        status: 'UNPAID',
-        ppnRate: taxRate,
-        ppnAmount,
-        totalAmount,
-        dueDate,
-      },
-      include: {
+        ...newInvoice,
         order: {
-          include: {
-            customer: true,
-          },
+          ...order,
+          customer: customer || null,
         },
       },
-    })
-
-    return NextResponse.json({ data: invoice }, { status: 201 })
+    }, { status: 201 })
   } catch (error) {
     console.error('Error creating invoice:', error)
     return NextResponse.json(

@@ -1,0 +1,2003 @@
+{
+  "products": [
+    {
+      "id": "prod-001",
+      "name": "Beras Premium IR 64 5kg",
+      "category": "Beras",
+      "unit": "karung",
+      "buyPrice": 58000,
+      "sellPrice": 65000,
+      "stock": 120,
+      "minStock": 20
+    },
+    {
+      "id": "prod-002",
+      "name": "Beras Medium IR 64 5kg",
+      "category": "Beras",
+      "unit": "karung",
+      "buyPrice": 52000,
+      "sellPrice": 58000,
+      "stock": 85,
+      "minStock": 20
+    },
+    {
+      "id": "prod-003",
+      "name": "Beras Pandan Wangi 5kg",
+      "category": "Beras",
+      "unit": "karung",
+      "buyPrice": 62000,
+      "sellPrice": 70000,
+      "stock": 45,
+      "minStock": 15
+    },
+    {
+      "id": "prod-004",
+      "name": "Beras Rojolele 5kg",
+      "category": "Beras",
+      "unit": "karung",
+      "buyPrice": 55000,
+      "sellPrice": 62000,
+      "stock": 60,
+      "minStock": 15
+    },
+    {
+      "id": "prod-005",
+      "name": "Beras Bulog 10kg",
+      "category": "Beras",
+      "unit": "karung",
+      "buyPrice": 105000,
+      "sellPrice": 115000,
+      "stock": 30,
+      "minStock": 10
+    },
+    {
+      "id": "prod-006",
+      "name": "Minyak Goreng Bimoli 2L",
+      "category": "Minyak Goreng",
+      "unit": "botol",
+      "buyPrice": 28000,
+      "sellPrice": 32000,
+      "stock": 200,
+      "minStock": 50
+    },
+    {
+      "id": "prod-007",
+      "name": "Minyak Goreng Curah 1L",
+      "category": "Minyak Goreng",
+      "unit": "liter",
+      "buyPrice": 14000,
+      "sellPrice": 16000,
+      "stock": 150,
+      "minStock": 40
+    },
+    {
+      "id": "prod-008",
+      "name": "Minyak Goreng Sania 2L",
+      "category": "Minyak Goreng",
+      "unit": "botol",
+      "buyPrice": 27000,
+      "sellPrice": 31000,
+      "stock": 80,
+      "minStock": 30
+    },
+    {
+      "id": "prod-009",
+      "name": "Gula Pasir Putih 1kg",
+      "category": "Gula",
+      "unit": "kg",
+      "buyPrice": 14500,
+      "sellPrice": 16500,
+      "stock": 180,
+      "minStock": 50
+    },
+    {
+      "id": "prod-010",
+      "name": "Gula Pasir Kristal 1kg",
+      "category": "Gula",
+      "unit": "kg",
+      "buyPrice": 15000,
+      "sellPrice": 17000,
+      "stock": 100,
+      "minStock": 30
+    },
+    {
+      "id": "prod-011",
+      "name": "Tepung Terigu Segitiga Biru 1kg",
+      "category": "Tepung",
+      "unit": "kg",
+      "buyPrice": 11000,
+      "sellPrice": 13000,
+      "stock": 150,
+      "minStock": 40
+    },
+    {
+      "id": "prod-012",
+      "name": "Tepung Beras Rose Brand 500g",
+      "category": "Tepung",
+      "unit": "pak",
+      "buyPrice": 8500,
+      "sellPrice": 10000,
+      "stock": 90,
+      "minStock": 25
+    },
+    {
+      "id": "prod-013",
+      "name": "Telur Ayam Negeri 1kg",
+      "category": "Telur",
+      "unit": "kg",
+      "buyPrice": 24000,
+      "sellPrice": 28000,
+      "stock": 60,
+      "minStock": 20
+    },
+    {
+      "id": "prod-014",
+      "name": "Indomie Goreng 1 dus (40pcs)",
+      "category": "Mie Instan",
+      "unit": "dus",
+      "buyPrice": 95000,
+      "sellPrice": 108000,
+      "stock": 75,
+      "minStock": 20
+    },
+    {
+      "id": "prod-015",
+      "name": "Indomie Kuah Soto 1 dus (40pcs)",
+      "category": "Mie Instan",
+      "unit": "dus",
+      "buyPrice": 95000,
+      "sellPrice": 108000,
+      "stock": 50,
+      "minStock": 15
+    },
+    {
+      "id": "prod-016",
+      "name": "Sedaap Goreng 1 dus (40pcs)",
+      "category": "Mie Instan",
+      "unit": "dus",
+      "buyPrice": 92000,
+      "sellPrice": 105000,
+      "stock": 40,
+      "minStock": 15
+    },
+    {
+      "id": "prod-017",
+      "name": "Kecap Manis ABC 600ml",
+      "category": "Kecap & Saus",
+      "unit": "botol",
+      "buyPrice": 17000,
+      "sellPrice": 19500,
+      "stock": 120,
+      "minStock": 30
+    },
+    {
+      "id": "prod-018",
+      "name": "Saos Sambal ABC 335ml",
+      "category": "Kecap & Saus",
+      "unit": "botol",
+      "buyPrice": 10000,
+      "sellPrice": 12000,
+      "stock": 80,
+      "minStock": 25
+    },
+    {
+      "id": "prod-019",
+      "name": "Kecap Asin ABC 275ml",
+      "category": "Kecap & Saus",
+      "unit": "botol",
+      "buyPrice": 8000,
+      "sellPrice": 9500,
+      "stock": 60,
+      "minStock": 20
+    },
+    {
+      "id": "prod-020",
+      "name": "Garam Dapur Beryodium 250g",
+      "category": "Bumbu & Rempah",
+      "unit": "pak",
+      "buyPrice": 2500,
+      "sellPrice": 3500,
+      "stock": 200,
+      "minStock": 60
+    },
+    {
+      "id": "prod-021",
+      "name": "Bawang Merah 1kg",
+      "category": "Bumbu & Rempah",
+      "unit": "kg",
+      "buyPrice": 32000,
+      "sellPrice": 38000,
+      "stock": 40,
+      "minStock": 10
+    },
+    {
+      "id": "prod-022",
+      "name": "Bawang Putih 1kg",
+      "category": "Bumbu & Rempah",
+      "unit": "kg",
+      "buyPrice": 28000,
+      "sellPrice": 34000,
+      "stock": 35,
+      "minStock": 10
+    },
+    {
+      "id": "prod-023",
+      "name": "Cabai Merah Keriting 1kg",
+      "category": "Bumbu & Rempah",
+      "unit": "kg",
+      "buyPrice": 35000,
+      "sellPrice": 42000,
+      "stock": 8,
+      "minStock": 10
+    },
+    {
+      "id": "prod-024",
+      "name": "Kunyit 1kg",
+      "category": "Bumbu & Rempah",
+      "unit": "kg",
+      "buyPrice": 18000,
+      "sellPrice": 22000,
+      "stock": 20,
+      "minStock": 5
+    },
+    {
+      "id": "prod-025",
+      "name": "Jahe 1kg",
+      "category": "Bumbu & Rempah",
+      "unit": "kg",
+      "buyPrice": 22000,
+      "sellPrice": 27000,
+      "stock": 18,
+      "minStock": 5
+    },
+    {
+      "id": "prod-026",
+      "name": "Lengkuas 1kg",
+      "category": "Bumbu & Rempah",
+      "unit": "kg",
+      "buyPrice": 15000,
+      "sellPrice": 19000,
+      "stock": 15,
+      "minStock": 5
+    },
+    {
+      "id": "prod-027",
+      "name": "Merica Bubuk 200g",
+      "category": "Bumbu & Rempah",
+      "unit": "pak",
+      "buyPrice": 12000,
+      "sellPrice": 15000,
+      "stock": 45,
+      "minStock": 15
+    },
+    {
+      "id": "prod-028",
+      "name": "Susu Kental Manis Frisian Flag 370g",
+      "category": "Susu",
+      "unit": "kaleng",
+      "buyPrice": 9500,
+      "sellPrice": 11500,
+      "stock": 180,
+      "minStock": 50
+    },
+    {
+      "id": "prod-029",
+      "name": "Susu Bubuk Dancow 400g",
+      "category": "Susu",
+      "unit": "pak",
+      "buyPrice": 32000,
+      "sellPrice": 37000,
+      "stock": 60,
+      "minStock": 15
+    },
+    {
+      "id": "prod-030",
+      "name": "Susu Bubuk Indomilk 800g",
+      "category": "Susu",
+      "unit": "pak",
+      "buyPrice": 58000,
+      "sellPrice": 66000,
+      "stock": 35,
+      "minStock": 10
+    },
+    {
+      "id": "prod-031",
+      "name": "Rinso Anti Noda 800g",
+      "category": "Kebutuhan RT",
+      "unit": "pak",
+      "buyPrice": 15000,
+      "sellPrice": 18000,
+      "stock": 100,
+      "minStock": 30
+    },
+    {
+      "id": "prod-032",
+      "name": "Sunlight 800ml",
+      "category": "Kebutuhan RT",
+      "unit": "botol",
+      "buyPrice": 12000,
+      "sellPrice": 14500,
+      "stock": 90,
+      "minStock": 25
+    },
+    {
+      "id": "prod-033",
+      "name": "Molto Pewangi 800ml",
+      "category": "Kebutuhan RT",
+      "unit": "botol",
+      "buyPrice": 10000,
+      "sellPrice": 12500,
+      "stock": 70,
+      "minStock": 20
+    },
+    {
+      "id": "prod-034",
+      "name": "Sarden ABC 425g",
+      "category": "Makanan Kaleng",
+      "unit": "kaleng",
+      "buyPrice": 12000,
+      "sellPrice": 14500,
+      "stock": 80,
+      "minStock": 25
+    },
+    {
+      "id": "prod-035",
+      "name": "Kornet Sapi Pronas 340g",
+      "category": "Makanan Kaleng",
+      "unit": "kaleng",
+      "buyPrice": 25000,
+      "sellPrice": 30000,
+      "stock": 40,
+      "minStock": 10
+    },
+    {
+      "id": "prod-036",
+      "name": "Aqua 600ml 1 dus (24pcs)",
+      "category": "Air Mineral",
+      "unit": "dus",
+      "buyPrice": 48000,
+      "sellPrice": 54000,
+      "stock": 60,
+      "minStock": 15
+    },
+    {
+      "id": "prod-037",
+      "name": "Aqua Galon 19L",
+      "category": "Air Mineral",
+      "unit": "galon",
+      "buyPrice": 14000,
+      "sellPrice": 18000,
+      "stock": 45,
+      "minStock": 15
+    },
+    {
+      "id": "prod-038",
+      "name": "Kapal Api Special 1 Renceng (10pcs)",
+      "category": "Kopi & Minuman",
+      "unit": "renceng",
+      "buyPrice": 11000,
+      "sellPrice": 13000,
+      "stock": 100,
+      "minStock": 30
+    },
+    {
+      "id": "prod-039",
+      "name": "Teh Pucuk Harum 1 dus (24pcs)",
+      "category": "Kopi & Minuman",
+      "unit": "dus",
+      "buyPrice": 58000,
+      "sellPrice": 66000,
+      "stock": 45,
+      "minStock": 10
+    },
+    {
+      "id": "prod-040",
+      "name": "Kopi Good Day Cappuccino 1 dus (10pcs)",
+      "category": "Kopi & Minuman",
+      "unit": "dus",
+      "buyPrice": 85000,
+      "sellPrice": 98000,
+      "stock": 30,
+      "minStock": 8
+    },
+    {
+      "id": "prod-041",
+      "name": "Kecap Manis Pohon Sagu 600ml",
+      "category": "Kecap & Saus",
+      "unit": "botol",
+      "buyPrice": 14000,
+      "sellPrice": 16500,
+      "stock": 70,
+      "minStock": 20
+    },
+    {
+      "id": "prod-1777031491901",
+      "name": "Test Product",
+      "category": "Test",
+      "unit": "pcs",
+      "buyPrice": 1000,
+      "sellPrice": 2000,
+      "stock": 50,
+      "minStock": 5
+    }
+  ],
+  "customers": [
+    {
+      "id": "cust-001",
+      "name": "Dapur SPPG Pati 1",
+      "phone": "081234567890",
+      "address": "Jl. Raya Pati No. 45, Kab. Pati",
+      "type": "DAPUR",
+      "createdAt": "2025-01-15T08:00:00.000Z"
+    },
+    {
+      "id": "cust-002",
+      "name": "Dapur SPPG Kayen",
+      "phone": "081345678901",
+      "address": "Jl. Raya Kayen No. 12, Kab. Pati",
+      "type": "DAPUR",
+      "createdAt": "2025-02-01T08:00:00.000Z"
+    },
+    {
+      "id": "cust-003",
+      "name": "Dapur SPPG Juwana",
+      "phone": "081456789012",
+      "address": "Jl. Raya Juwana No. 78, Kab. Pati",
+      "type": "DAPUR",
+      "createdAt": "2025-02-10T08:00:00.000Z"
+    },
+    {
+      "id": "cust-004",
+      "name": "Warung Bu Siti",
+      "phone": "081567890123",
+      "address": "Jl. Desa Sriwedari No. 5, Kab. Pati",
+      "type": "ECERAN",
+      "createdAt": "2025-03-01T08:00:00.000Z"
+    },
+    {
+      "id": "cust-005",
+      "name": "Toko Maju Jaya",
+      "phone": "081678901234",
+      "address": "Jl. Pasar Baru No. 22, Kab. Pati",
+      "type": "GROSIR",
+      "createdAt": "2025-03-05T08:00:00.000Z"
+    },
+    {
+      "id": "cust-006",
+      "name": "Dapur SPPG Tayu",
+      "phone": "081789012345",
+      "address": "Jl. Raya Tayu No. 33, Kab. Pati",
+      "type": "DAPUR",
+      "createdAt": "2025-03-10T08:00:00.000Z"
+    },
+    {
+      "id": "cust-007",
+      "name": "Warung Pak Hadi",
+      "phone": "081890123456",
+      "address": "Jl. Raya Margorejo No. 15, Kab. Pati",
+      "type": "ECERAN",
+      "createdAt": "2025-03-15T08:00:00.000Z"
+    },
+    {
+      "id": "cust-008",
+      "name": "Toko Berkah Abadi",
+      "phone": "081901234567",
+      "address": "Jl. Raya Rembang Km 5, Kab. Pati",
+      "type": "GROSIR",
+      "createdAt": "2025-03-20T08:00:00.000Z"
+    },
+    {
+      "id": "cust-1777031492034",
+      "name": "Test Customer",
+      "phone": "081234567",
+      "address": null,
+      "type": "ECERAN",
+      "createdAt": "2026-04-24T11:51:32.034Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord-001",
+      "orderNumber": "ORD-0001-0125",
+      "customerId": "cust-001",
+      "status": "COMPLETED",
+      "notes": "Pesan via telepon",
+      "totalAmount": 890000,
+      "createdAt": "2025-01-25T09:30:00.000Z",
+      "updatedAt": "2025-01-26T14:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-001",
+          "productId": "prod-001",
+          "quantity": 5,
+          "price": 65000,
+          "subtotal": 325000
+        },
+        {
+          "id": "oi-002",
+          "productId": "prod-006",
+          "quantity": 10,
+          "price": 32000,
+          "subtotal": 320000
+        },
+        {
+          "id": "oi-003",
+          "productId": "prod-017",
+          "quantity": 5,
+          "price": 19500,
+          "subtotal": 97500
+        },
+        {
+          "id": "oi-004",
+          "productId": "prod-009",
+          "quantity": 10,
+          "price": 16500,
+          "subtotal": 165000
+        },
+        {
+          "id": "oi-005",
+          "productId": "prod-020",
+          "quantity": 20,
+          "price": 3500,
+          "subtotal": 70000
+        }
+      ]
+    },
+    {
+      "id": "ord-002",
+      "orderNumber": "ORD-0002-0128",
+      "customerId": "cust-002",
+      "status": "COMPLETED",
+      "notes": "Kirim sore hari",
+      "totalAmount": 1250000,
+      "createdAt": "2025-01-28T10:15:00.000Z",
+      "updatedAt": "2025-01-29T16:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-006",
+          "productId": "prod-001",
+          "quantity": 10,
+          "price": 65000,
+          "subtotal": 650000
+        },
+        {
+          "id": "oi-007",
+          "productId": "prod-014",
+          "quantity": 3,
+          "price": 108000,
+          "subtotal": 324000
+        },
+        {
+          "id": "oi-008",
+          "productId": "prod-028",
+          "quantity": 20,
+          "price": 11500,
+          "subtotal": 230000
+        }
+      ]
+    },
+    {
+      "id": "ord-003",
+      "orderNumber": "ORD-0003-0201",
+      "customerId": "cust-005",
+      "status": "COMPLETED",
+      "notes": "Pesanan rutin",
+      "totalAmount": 2350000,
+      "createdAt": "2025-02-01T08:45:00.000Z",
+      "updatedAt": "2025-02-02T11:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-009",
+          "productId": "prod-001",
+          "quantity": 15,
+          "price": 65000,
+          "subtotal": 975000
+        },
+        {
+          "id": "oi-010",
+          "productId": "prod-006",
+          "quantity": 20,
+          "price": 32000,
+          "subtotal": 640000
+        },
+        {
+          "id": "oi-011",
+          "productId": "prod-009",
+          "quantity": 30,
+          "price": 16500,
+          "subtotal": 495000
+        },
+        {
+          "id": "oi-012",
+          "productId": "prod-014",
+          "quantity": 5,
+          "price": 108000,
+          "subtotal": 540000
+        }
+      ]
+    },
+    {
+      "id": "ord-004",
+      "orderNumber": "ORD-0004-0205",
+      "customerId": "cust-003",
+      "status": "COMPLETED",
+      "notes": "Urgent untuk besok",
+      "totalAmount": 675000,
+      "createdAt": "2025-02-05T13:20:00.000Z",
+      "updatedAt": "2025-02-06T09:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-013",
+          "productId": "prod-002",
+          "quantity": 5,
+          "price": 58000,
+          "subtotal": 290000
+        },
+        {
+          "id": "oi-014",
+          "productId": "prod-021",
+          "quantity": 5,
+          "price": 38000,
+          "subtotal": 190000
+        },
+        {
+          "id": "oi-015",
+          "productId": "prod-022",
+          "quantity": 5,
+          "price": 34000,
+          "subtotal": 170000
+        },
+        {
+          "id": "oi-016",
+          "productId": "prod-023",
+          "quantity": 3,
+          "price": 42000,
+          "subtotal": 126000
+        }
+      ]
+    },
+    {
+      "id": "ord-005",
+      "orderNumber": "ORD-0005-0210",
+      "customerId": "cust-004",
+      "status": "COMPLETED",
+      "notes": null,
+      "totalAmount": 320000,
+      "createdAt": "2025-02-10T11:00:00.000Z",
+      "updatedAt": "2025-02-11T15:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-017",
+          "productId": "prod-006",
+          "quantity": 5,
+          "price": 32000,
+          "subtotal": 160000
+        },
+        {
+          "id": "oi-018",
+          "productId": "prod-014",
+          "quantity": 1,
+          "price": 108000,
+          "subtotal": 108000
+        },
+        {
+          "id": "oi-019",
+          "productId": "prod-009",
+          "quantity": 3,
+          "price": 16500,
+          "subtotal": 49500
+        }
+      ]
+    },
+    {
+      "id": "ord-006",
+      "orderNumber": "ORD-0006-0215",
+      "customerId": "cust-006",
+      "status": "COMPLETED",
+      "notes": "Kirim pagi",
+      "totalAmount": 1080000,
+      "createdAt": "2025-02-15T07:30:00.000Z",
+      "updatedAt": "2025-02-16T10:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-020",
+          "productId": "prod-003",
+          "quantity": 5,
+          "price": 70000,
+          "subtotal": 350000
+        },
+        {
+          "id": "oi-021",
+          "productId": "prod-009",
+          "quantity": 20,
+          "price": 16500,
+          "subtotal": 330000
+        },
+        {
+          "id": "oi-022",
+          "productId": "prod-028",
+          "quantity": 30,
+          "price": 11500,
+          "subtotal": 345000
+        }
+      ]
+    },
+    {
+      "id": "ord-007",
+      "orderNumber": "ORD-0007-0220",
+      "customerId": "cust-008",
+      "status": "COMPLETED",
+      "notes": "Pesanan besar",
+      "totalAmount": 3200000,
+      "createdAt": "2025-02-20T09:00:00.000Z",
+      "updatedAt": "2025-02-21T14:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-023",
+          "productId": "prod-001",
+          "quantity": 20,
+          "price": 65000,
+          "subtotal": 1300000
+        },
+        {
+          "id": "oi-024",
+          "productId": "prod-006",
+          "quantity": 30,
+          "price": 32000,
+          "subtotal": 960000
+        },
+        {
+          "id": "oi-025",
+          "productId": "prod-014",
+          "quantity": 5,
+          "price": 108000,
+          "subtotal": 540000
+        },
+        {
+          "id": "oi-026",
+          "productId": "prod-009",
+          "quantity": 20,
+          "price": 16500,
+          "subtotal": 330000
+        }
+      ]
+    },
+    {
+      "id": "ord-008",
+      "orderNumber": "ORD-0008-0301",
+      "customerId": "cust-001",
+      "status": "COMPLETED",
+      "notes": "Pesan rutin bulanan",
+      "totalAmount": 1560000,
+      "createdAt": "2025-03-01T08:00:00.000Z",
+      "updatedAt": "2025-03-02T12:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-027",
+          "productId": "prod-001",
+          "quantity": 8,
+          "price": 65000,
+          "subtotal": 520000
+        },
+        {
+          "id": "oi-028",
+          "productId": "prod-006",
+          "quantity": 15,
+          "price": 32000,
+          "subtotal": 480000
+        },
+        {
+          "id": "oi-029",
+          "productId": "prod-009",
+          "quantity": 20,
+          "price": 16500,
+          "subtotal": 330000
+        },
+        {
+          "id": "oi-030",
+          "productId": "prod-014",
+          "quantity": 2,
+          "price": 108000,
+          "subtotal": 216000
+        }
+      ]
+    },
+    {
+      "id": "ord-009",
+      "orderNumber": "ORD-0009-0305",
+      "customerId": "cust-007",
+      "status": "COMPLETED",
+      "notes": null,
+      "totalAmount": 545000,
+      "createdAt": "2025-03-05T14:30:00.000Z",
+      "updatedAt": "2025-03-06T10:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-031",
+          "productId": "prod-014",
+          "quantity": 2,
+          "price": 108000,
+          "subtotal": 216000
+        },
+        {
+          "id": "oi-032",
+          "productId": "prod-006",
+          "quantity": 5,
+          "price": 32000,
+          "subtotal": 160000
+        },
+        {
+          "id": "oi-033",
+          "productId": "prod-017",
+          "quantity": 5,
+          "price": 19500,
+          "subtotal": 97500
+        },
+        {
+          "id": "oi-034",
+          "productId": "prod-020",
+          "quantity": 20,
+          "price": 3500,
+          "subtotal": 70000
+        }
+      ]
+    },
+    {
+      "id": "ord-010",
+      "orderNumber": "ORD-0010-0310",
+      "customerId": "cust-002",
+      "status": "COMPLETED",
+      "notes": "Kirim besok pagi",
+      "totalAmount": 920000,
+      "createdAt": "2025-03-10T11:15:00.000Z",
+      "updatedAt": "2025-03-11T09:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-035",
+          "productId": "prod-002",
+          "quantity": 5,
+          "price": 58000,
+          "subtotal": 290000
+        },
+        {
+          "id": "oi-036",
+          "productId": "prod-021",
+          "quantity": 8,
+          "price": 38000,
+          "subtotal": 304000
+        },
+        {
+          "id": "oi-037",
+          "productId": "prod-022",
+          "quantity": 5,
+          "price": 34000,
+          "subtotal": 170000
+        },
+        {
+          "id": "oi-038",
+          "productId": "prod-036",
+          "quantity": 3,
+          "price": 54000,
+          "subtotal": 162000
+        }
+      ]
+    },
+    {
+      "id": "ord-011",
+      "orderNumber": "ORD-0011-0315",
+      "customerId": "cust-005",
+      "status": "COMPLETED",
+      "notes": null,
+      "totalAmount": 1890000,
+      "createdAt": "2025-03-15T09:00:00.000Z",
+      "updatedAt": "2025-03-16T14:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-039",
+          "productId": "prod-001",
+          "quantity": 12,
+          "price": 65000,
+          "subtotal": 780000
+        },
+        {
+          "id": "oi-040",
+          "productId": "prod-006",
+          "quantity": 15,
+          "price": 32000,
+          "subtotal": 480000
+        },
+        {
+          "id": "oi-041",
+          "productId": "prod-028",
+          "quantity": 30,
+          "price": 11500,
+          "subtotal": 345000
+        },
+        {
+          "id": "oi-042",
+          "productId": "prod-038",
+          "quantity": 15,
+          "price": 13000,
+          "subtotal": 195000
+        },
+        {
+          "id": "oi-043",
+          "productId": "prod-009",
+          "quantity": 6,
+          "price": 16500,
+          "subtotal": 99000
+        }
+      ]
+    },
+    {
+      "id": "ord-012",
+      "orderNumber": "ORD-0012-0320",
+      "customerId": "cust-003",
+      "status": "COMPLETED",
+      "notes": "Pesan via telepon",
+      "totalAmount": 780000,
+      "createdAt": "2025-03-20T13:00:00.000Z",
+      "updatedAt": "2025-03-21T10:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-044",
+          "productId": "prod-003",
+          "quantity": 3,
+          "price": 70000,
+          "subtotal": 210000
+        },
+        {
+          "id": "oi-045",
+          "productId": "prod-014",
+          "quantity": 2,
+          "price": 108000,
+          "subtotal": 216000
+        },
+        {
+          "id": "oi-046",
+          "productId": "prod-017",
+          "quantity": 8,
+          "price": 19500,
+          "subtotal": 156000
+        },
+        {
+          "id": "oi-047",
+          "productId": "prod-031",
+          "quantity": 10,
+          "price": 18000,
+          "subtotal": 180000
+        }
+      ]
+    },
+    {
+      "id": "ord-013",
+      "orderNumber": "ORD-0013-0325",
+      "customerId": "cust-006",
+      "status": "COMPLETED",
+      "notes": "Kirim sore",
+      "totalAmount": 1450000,
+      "createdAt": "2025-03-25T10:30:00.000Z",
+      "updatedAt": "2025-03-26T16:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-048",
+          "productId": "prod-001",
+          "quantity": 10,
+          "price": 65000,
+          "subtotal": 650000
+        },
+        {
+          "id": "oi-049",
+          "productId": "prod-009",
+          "quantity": 25,
+          "price": 16500,
+          "subtotal": 412500
+        },
+        {
+          "id": "oi-050",
+          "productId": "prod-028",
+          "quantity": 25,
+          "price": 11500,
+          "subtotal": 287500
+        },
+        {
+          "id": "oi-051",
+          "productId": "prod-039",
+          "quantity": 2,
+          "price": 66000,
+          "subtotal": 132000
+        }
+      ]
+    },
+    {
+      "id": "ord-014",
+      "orderNumber": "ORD-0014-0401",
+      "customerId": "cust-004",
+      "status": "COMPLETED",
+      "notes": null,
+      "totalAmount": 420000,
+      "createdAt": "2025-04-01T09:00:00.000Z",
+      "updatedAt": "2025-04-02T11:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-052",
+          "productId": "prod-006",
+          "quantity": 5,
+          "price": 32000,
+          "subtotal": 160000
+        },
+        {
+          "id": "oi-053",
+          "productId": "prod-014",
+          "quantity": 1,
+          "price": 108000,
+          "subtotal": 108000
+        },
+        {
+          "id": "oi-054",
+          "productId": "prod-009",
+          "quantity": 9,
+          "price": 16500,
+          "subtotal": 148500
+        }
+      ]
+    },
+    {
+      "id": "ord-015",
+      "orderNumber": "ORD-0015-0405",
+      "customerId": "cust-008",
+      "status": "COMPLETED",
+      "notes": "Pesanan grosir bulanan",
+      "totalAmount": 4350000,
+      "createdAt": "2025-04-05T08:30:00.000Z",
+      "updatedAt": "2025-04-06T15:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-055",
+          "productId": "prod-001",
+          "quantity": 30,
+          "price": 65000,
+          "subtotal": 1950000
+        },
+        {
+          "id": "oi-056",
+          "productId": "prod-006",
+          "quantity": 40,
+          "price": 32000,
+          "subtotal": 1280000
+        },
+        {
+          "id": "oi-057",
+          "productId": "prod-014",
+          "quantity": 5,
+          "price": 108000,
+          "subtotal": 540000
+        },
+        {
+          "id": "oi-058",
+          "productId": "prod-009",
+          "quantity": 30,
+          "price": 16500,
+          "subtotal": 495000
+        }
+      ]
+    },
+    {
+      "id": "ord-016",
+      "orderNumber": "ORD-0016-0410",
+      "customerId": "cust-001",
+      "status": "COMPLETED",
+      "notes": "Pesan rutin",
+      "totalAmount": 1120000,
+      "createdAt": "2025-04-10T09:30:00.000Z",
+      "updatedAt": "2025-04-11T14:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-059",
+          "productId": "prod-001",
+          "quantity": 6,
+          "price": 65000,
+          "subtotal": 390000
+        },
+        {
+          "id": "oi-060",
+          "productId": "prod-006",
+          "quantity": 10,
+          "price": 32000,
+          "subtotal": 320000
+        },
+        {
+          "id": "oi-061",
+          "productId": "prod-028",
+          "quantity": 25,
+          "price": 11500,
+          "subtotal": 287500
+        },
+        {
+          "id": "oi-062",
+          "productId": "prod-020",
+          "quantity": 30,
+          "price": 3500,
+          "subtotal": 105000
+        }
+      ]
+    },
+    {
+      "id": "ord-017",
+      "orderNumber": "ORD-0017-0415",
+      "customerId": "cust-002",
+      "status": "SHIPPED",
+      "notes": "Sedang dikirim",
+      "totalAmount": 850000,
+      "createdAt": "2025-04-15T11:00:00.000Z",
+      "updatedAt": "2025-04-16T08:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-063",
+          "productId": "prod-002",
+          "quantity": 5,
+          "price": 58000,
+          "subtotal": 290000
+        },
+        {
+          "id": "oi-064",
+          "productId": "prod-021",
+          "quantity": 10,
+          "price": 38000,
+          "subtotal": 380000
+        },
+        {
+          "id": "oi-065",
+          "productId": "prod-022",
+          "quantity": 5,
+          "price": 34000,
+          "subtotal": 170000
+        }
+      ]
+    },
+    {
+      "id": "ord-018",
+      "orderNumber": "ORD-0018-0418",
+      "customerId": "cust-005",
+      "status": "CONFIRMED",
+      "notes": "Konfirmasi siap kirim",
+      "totalAmount": 1680000,
+      "createdAt": "2025-04-18T10:00:00.000Z",
+      "updatedAt": "2025-04-18T10:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-066",
+          "productId": "prod-001",
+          "quantity": 10,
+          "price": 65000,
+          "subtotal": 650000
+        },
+        {
+          "id": "oi-067",
+          "productId": "prod-006",
+          "quantity": 15,
+          "price": 32000,
+          "subtotal": 480000
+        },
+        {
+          "id": "oi-068",
+          "productId": "prod-014",
+          "quantity": 3,
+          "price": 108000,
+          "subtotal": 324000
+        },
+        {
+          "id": "oi-069",
+          "productId": "prod-028",
+          "quantity": 20,
+          "price": 11500,
+          "subtotal": 230000
+        }
+      ]
+    },
+    {
+      "id": "ord-019",
+      "orderNumber": "ORD-0019-0420",
+      "customerId": "cust-007",
+      "status": "PROCESSING",
+      "notes": "Sedang disiapkan",
+      "totalAmount": 540000,
+      "createdAt": "2025-04-20T14:00:00.000Z",
+      "updatedAt": "2025-04-20T14:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-070",
+          "productId": "prod-014",
+          "quantity": 2,
+          "price": 108000,
+          "subtotal": 216000
+        },
+        {
+          "id": "oi-071",
+          "productId": "prod-006",
+          "quantity": 5,
+          "price": 32000,
+          "subtotal": 160000
+        },
+        {
+          "id": "oi-072",
+          "productId": "prod-009",
+          "quantity": 10,
+          "price": 16500,
+          "subtotal": 165000
+        }
+      ]
+    },
+    {
+      "id": "ord-020",
+      "orderNumber": "ORD-0020-0422",
+      "customerId": "cust-003",
+      "status": "PENDING",
+      "notes": "Menunggu konfirmasi",
+      "totalAmount": 950000,
+      "createdAt": "2025-04-22T09:00:00.000Z",
+      "updatedAt": "2025-04-22T09:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-073",
+          "productId": "prod-003",
+          "quantity": 5,
+          "price": 70000,
+          "subtotal": 350000
+        },
+        {
+          "id": "oi-074",
+          "productId": "prod-014",
+          "quantity": 2,
+          "price": 108000,
+          "subtotal": 216000
+        },
+        {
+          "id": "oi-075",
+          "productId": "prod-017",
+          "quantity": 10,
+          "price": 19500,
+          "subtotal": 195000
+        },
+        {
+          "id": "oi-076",
+          "productId": "prod-031",
+          "quantity": 10,
+          "price": 18000,
+          "subtotal": 180000
+        }
+      ]
+    },
+    {
+      "id": "ord-021",
+      "orderNumber": "ORD-0021-0424",
+      "customerId": "cust-006",
+      "status": "PENDING",
+      "notes": "Pesanan baru via telepon",
+      "totalAmount": 720000,
+      "createdAt": "2025-04-24T15:00:00.000Z",
+      "updatedAt": "2025-04-24T15:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-077",
+          "productId": "prod-001",
+          "quantity": 5,
+          "price": 65000,
+          "subtotal": 325000
+        },
+        {
+          "id": "oi-078",
+          "productId": "prod-009",
+          "quantity": 20,
+          "price": 16500,
+          "subtotal": 330000
+        },
+        {
+          "id": "oi-079",
+          "productId": "prod-020",
+          "quantity": 15,
+          "price": 3500,
+          "subtotal": 52500
+        }
+      ]
+    },
+    {
+      "id": "ord-022",
+      "orderNumber": "ORD-0022-0218",
+      "customerId": "cust-004",
+      "status": "CANCELLED",
+      "notes": "Pelanggan membatalkan",
+      "totalAmount": 178500,
+      "createdAt": "2025-02-18T16:00:00.000Z",
+      "updatedAt": "2025-02-18T17:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-080",
+          "productId": "prod-006",
+          "quantity": 3,
+          "price": 32000,
+          "subtotal": 96000
+        },
+        {
+          "id": "oi-081",
+          "productId": "prod-009",
+          "quantity": 5,
+          "price": 16500,
+          "subtotal": 82500
+        }
+      ]
+    },
+    {
+      "id": "ord-023",
+      "orderNumber": "ORD-0023-0318",
+      "customerId": "cust-007",
+      "status": "CANCELLED",
+      "notes": "Stok habis",
+      "totalAmount": 0,
+      "createdAt": "2025-03-18T10:00:00.000Z",
+      "updatedAt": "2025-03-18T12:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-082",
+          "productId": "prod-023",
+          "quantity": 10,
+          "price": 42000,
+          "subtotal": 420000
+        }
+      ]
+    },
+    {
+      "id": "ord-024",
+      "orderNumber": "ORD-0024-0408",
+      "customerId": "cust-005",
+      "status": "COMPLETED",
+      "notes": null,
+      "totalAmount": 1250000,
+      "createdAt": "2025-04-08T08:00:00.000Z",
+      "updatedAt": "2025-04-09T14:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-083",
+          "productId": "prod-001",
+          "quantity": 8,
+          "price": 65000,
+          "subtotal": 520000
+        },
+        {
+          "id": "oi-084",
+          "productId": "prod-006",
+          "quantity": 10,
+          "price": 32000,
+          "subtotal": 320000
+        },
+        {
+          "id": "oi-085",
+          "productId": "prod-028",
+          "quantity": 25,
+          "price": 11500,
+          "subtotal": 287500
+        },
+        {
+          "id": "oi-086",
+          "productId": "prod-038",
+          "quantity": 10,
+          "price": 13000,
+          "subtotal": 130000
+        }
+      ]
+    },
+    {
+      "id": "ord-025",
+      "orderNumber": "ORD-0025-0426",
+      "customerId": "cust-001",
+      "status": "COMPLETED",
+      "notes": "Pesan rutin mingguan",
+      "totalAmount": 1345000,
+      "createdAt": "2025-04-26T08:00:00.000Z",
+      "updatedAt": "2025-04-26T14:00:00.000Z",
+      "items": [
+        {
+          "id": "oi-087",
+          "productId": "prod-001",
+          "quantity": 8,
+          "price": 65000,
+          "subtotal": 520000
+        },
+        {
+          "id": "oi-088",
+          "productId": "prod-006",
+          "quantity": 12,
+          "price": 32000,
+          "subtotal": 384000
+        },
+        {
+          "id": "oi-089",
+          "productId": "prod-009",
+          "quantity": 20,
+          "price": 16500,
+          "subtotal": 330000
+        },
+        {
+          "id": "oi-090",
+          "productId": "prod-020",
+          "quantity": 30,
+          "price": 3500,
+          "subtotal": 105000
+        }
+      ]
+    }
+  ],
+  "invoices": [
+    {
+      "id": "inv-001",
+      "invoiceNumber": "INV-0001-0125",
+      "orderId": "ord-001",
+      "status": "PAID",
+      "ppnRate": 11,
+      "ppnAmount": 97900,
+      "totalAmount": 987900,
+      "dueDate": "2025-02-08T23:59:59.000Z",
+      "paidAt": "2025-01-26T14:00:00.000Z",
+      "createdAt": "2025-01-25T09:30:00.000Z"
+    },
+    {
+      "id": "inv-002",
+      "invoiceNumber": "INV-0002-0128",
+      "orderId": "ord-002",
+      "status": "PAID",
+      "ppnRate": 11,
+      "ppnAmount": 137500,
+      "totalAmount": 1387500,
+      "dueDate": "2025-02-11T23:59:59.000Z",
+      "paidAt": "2025-01-29T16:00:00.000Z",
+      "createdAt": "2025-01-28T10:15:00.000Z"
+    },
+    {
+      "id": "inv-003",
+      "invoiceNumber": "INV-0003-0201",
+      "orderId": "ord-003",
+      "status": "PAID",
+      "ppnRate": 11,
+      "ppnAmount": 258500,
+      "totalAmount": 2608500,
+      "dueDate": "2025-02-15T23:59:59.000Z",
+      "paidAt": "2025-02-02T11:00:00.000Z",
+      "createdAt": "2025-02-01T08:45:00.000Z"
+    },
+    {
+      "id": "inv-004",
+      "invoiceNumber": "INV-0004-0205",
+      "orderId": "ord-004",
+      "status": "PAID",
+      "ppnRate": 11,
+      "ppnAmount": 74250,
+      "totalAmount": 749250,
+      "dueDate": "2025-02-19T23:59:59.000Z",
+      "paidAt": "2025-02-06T09:00:00.000Z",
+      "createdAt": "2025-02-05T13:20:00.000Z"
+    },
+    {
+      "id": "inv-005",
+      "invoiceNumber": "INV-0005-0210",
+      "orderId": "ord-005",
+      "status": "PAID",
+      "ppnRate": 11,
+      "ppnAmount": 35200,
+      "totalAmount": 355200,
+      "dueDate": "2025-02-24T23:59:59.000Z",
+      "paidAt": "2025-02-11T15:00:00.000Z",
+      "createdAt": "2025-02-10T11:00:00.000Z"
+    },
+    {
+      "id": "inv-006",
+      "invoiceNumber": "INV-0006-0215",
+      "orderId": "ord-006",
+      "status": "PAID",
+      "ppnRate": 11,
+      "ppnAmount": 118800,
+      "totalAmount": 1198800,
+      "dueDate": "2025-03-01T23:59:59.000Z",
+      "paidAt": "2025-02-16T10:00:00.000Z",
+      "createdAt": "2025-02-15T07:30:00.000Z"
+    },
+    {
+      "id": "inv-007",
+      "invoiceNumber": "INV-0007-0220",
+      "orderId": "ord-007",
+      "status": "PAID",
+      "ppnRate": 11,
+      "ppnAmount": 352000,
+      "totalAmount": 3552000,
+      "dueDate": "2025-03-06T23:59:59.000Z",
+      "paidAt": "2025-02-21T14:00:00.000Z",
+      "createdAt": "2025-02-20T09:00:00.000Z"
+    },
+    {
+      "id": "inv-008",
+      "invoiceNumber": "INV-0008-0301",
+      "orderId": "ord-008",
+      "status": "PAID",
+      "ppnRate": 11,
+      "ppnAmount": 171600,
+      "totalAmount": 1731600,
+      "dueDate": "2025-03-15T23:59:59.000Z",
+      "paidAt": "2025-03-02T12:00:00.000Z",
+      "createdAt": "2025-03-01T08:00:00.000Z"
+    },
+    {
+      "id": "inv-009",
+      "invoiceNumber": "INV-0009-0305",
+      "orderId": "ord-009",
+      "status": "PAID",
+      "ppnRate": 11,
+      "ppnAmount": 59950,
+      "totalAmount": 604950,
+      "dueDate": "2025-03-19T23:59:59.000Z",
+      "paidAt": "2025-03-06T10:00:00.000Z",
+      "createdAt": "2025-03-05T14:30:00.000Z"
+    },
+    {
+      "id": "inv-010",
+      "invoiceNumber": "INV-0010-0310",
+      "orderId": "ord-010",
+      "status": "PAID",
+      "ppnRate": 11,
+      "ppnAmount": 101200,
+      "totalAmount": 1021200,
+      "dueDate": "2025-03-24T23:59:59.000Z",
+      "paidAt": "2025-03-11T09:00:00.000Z",
+      "createdAt": "2025-03-10T11:15:00.000Z"
+    },
+    {
+      "id": "inv-011",
+      "invoiceNumber": "INV-0011-0315",
+      "orderId": "ord-011",
+      "status": "PAID",
+      "ppnRate": 11,
+      "ppnAmount": 207900,
+      "totalAmount": 2097900,
+      "dueDate": "2025-03-29T23:59:59.000Z",
+      "paidAt": "2025-03-16T14:00:00.000Z",
+      "createdAt": "2025-03-15T09:00:00.000Z"
+    },
+    {
+      "id": "inv-012",
+      "invoiceNumber": "INV-0012-0320",
+      "orderId": "ord-012",
+      "status": "PAID",
+      "ppnRate": 11,
+      "ppnAmount": 85800,
+      "totalAmount": 865800,
+      "dueDate": "2025-04-03T23:59:59.000Z",
+      "paidAt": "2025-03-21T10:00:00.000Z",
+      "createdAt": "2025-03-20T13:00:00.000Z"
+    },
+    {
+      "id": "inv-013",
+      "invoiceNumber": "INV-0013-0325",
+      "orderId": "ord-013",
+      "status": "PAID",
+      "ppnRate": 11,
+      "ppnAmount": 159500,
+      "totalAmount": 1609500,
+      "dueDate": "2025-04-08T23:59:59.000Z",
+      "paidAt": "2025-03-26T16:00:00.000Z",
+      "createdAt": "2025-03-25T10:30:00.000Z"
+    },
+    {
+      "id": "inv-014",
+      "invoiceNumber": "INV-0014-0401",
+      "orderId": "ord-014",
+      "status": "PAID",
+      "ppnRate": 11,
+      "ppnAmount": 46200,
+      "totalAmount": 466200,
+      "dueDate": "2025-04-15T23:59:59.000Z",
+      "paidAt": "2025-04-02T11:00:00.000Z",
+      "createdAt": "2025-04-01T09:00:00.000Z"
+    },
+    {
+      "id": "inv-015",
+      "invoiceNumber": "INV-0015-0405",
+      "orderId": "ord-015",
+      "status": "PAID",
+      "ppnRate": 11,
+      "ppnAmount": 478500,
+      "totalAmount": 4828500,
+      "dueDate": "2025-04-19T23:59:59.000Z",
+      "paidAt": "2025-04-06T15:00:00.000Z",
+      "createdAt": "2025-04-05T08:30:00.000Z"
+    },
+    {
+      "id": "inv-016",
+      "invoiceNumber": "INV-0016-0410",
+      "orderId": "ord-016",
+      "status": "PAID",
+      "ppnRate": 11,
+      "ppnAmount": 123200,
+      "totalAmount": 1243200,
+      "dueDate": "2025-04-24T23:59:59.000Z",
+      "paidAt": "2025-04-11T14:00:00.000Z",
+      "createdAt": "2025-04-10T09:30:00.000Z"
+    },
+    {
+      "id": "inv-017",
+      "invoiceNumber": "INV-0017-0415",
+      "orderId": "ord-017",
+      "status": "UNPAID",
+      "ppnRate": 11,
+      "ppnAmount": 93500,
+      "totalAmount": 943500,
+      "dueDate": "2025-04-29T23:59:59.000Z",
+      "paidAt": null,
+      "createdAt": "2025-04-15T11:00:00.000Z"
+    },
+    {
+      "id": "inv-018",
+      "invoiceNumber": "INV-0018-0418",
+      "orderId": "ord-018",
+      "status": "UNPAID",
+      "ppnRate": 11,
+      "ppnAmount": 184800,
+      "totalAmount": 1864800,
+      "dueDate": "2025-05-02T23:59:59.000Z",
+      "paidAt": null,
+      "createdAt": "2025-04-18T10:00:00.000Z"
+    }
+  ],
+  "payments": [
+    {
+      "id": "pay-001",
+      "paymentNumber": "PAY-0001",
+      "orderId": "ord-001",
+      "amount": 890000,
+      "method": "TRANSFER",
+      "date": "2025-01-26T14:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-002",
+      "paymentNumber": "PAY-0002",
+      "orderId": "ord-002",
+      "amount": 1250000,
+      "method": "CASH",
+      "date": "2025-01-29T16:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-003",
+      "paymentNumber": "PAY-0003",
+      "orderId": "ord-003",
+      "amount": 2350000,
+      "method": "TRANSFER",
+      "date": "2025-02-02T11:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-004",
+      "paymentNumber": "PAY-0004",
+      "orderId": "ord-004",
+      "amount": 675000,
+      "method": "TRANSFER",
+      "date": "2025-02-06T09:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-005",
+      "paymentNumber": "PAY-0005",
+      "orderId": "ord-005",
+      "amount": 320000,
+      "method": "CASH",
+      "date": "2025-02-11T15:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-006",
+      "paymentNumber": "PAY-0006",
+      "orderId": "ord-006",
+      "amount": 1080000,
+      "method": "TRANSFER",
+      "date": "2025-02-16T10:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-007",
+      "paymentNumber": "PAY-0007",
+      "orderId": "ord-007",
+      "amount": 3200000,
+      "method": "TRANSFER",
+      "date": "2025-02-21T14:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-008",
+      "paymentNumber": "PAY-0008",
+      "orderId": "ord-008",
+      "amount": 1560000,
+      "method": "CASH",
+      "date": "2025-03-02T12:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-009",
+      "paymentNumber": "PAY-0009",
+      "orderId": "ord-009",
+      "amount": 545000,
+      "method": "CASH",
+      "date": "2025-03-06T10:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-010",
+      "paymentNumber": "PAY-0010",
+      "orderId": "ord-010",
+      "amount": 920000,
+      "method": "TRANSFER",
+      "date": "2025-03-11T09:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-011",
+      "paymentNumber": "PAY-0011",
+      "orderId": "ord-011",
+      "amount": 1890000,
+      "method": "TRANSFER",
+      "date": "2025-03-16T14:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-012",
+      "paymentNumber": "PAY-0012",
+      "orderId": "ord-012",
+      "amount": 780000,
+      "method": "CASH",
+      "date": "2025-03-21T10:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-013",
+      "paymentNumber": "PAY-0013",
+      "orderId": "ord-013",
+      "amount": 1450000,
+      "method": "TRANSFER",
+      "date": "2025-03-26T16:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-014",
+      "paymentNumber": "PAY-0014",
+      "orderId": "ord-014",
+      "amount": 420000,
+      "method": "CASH",
+      "date": "2025-04-02T11:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-015",
+      "paymentNumber": "PAY-0015",
+      "orderId": "ord-015",
+      "amount": 4350000,
+      "method": "TRANSFER",
+      "date": "2025-04-06T15:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-016",
+      "paymentNumber": "PAY-0016",
+      "orderId": "ord-016",
+      "amount": 1120000,
+      "method": "TRANSFER",
+      "date": "2025-04-11T14:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-017",
+      "paymentNumber": "PAY-0017",
+      "orderId": "ord-024",
+      "amount": 1250000,
+      "method": "CASH",
+      "date": "2025-04-09T14:00:00.000Z",
+      "notes": "Lunas"
+    },
+    {
+      "id": "pay-018",
+      "paymentNumber": "PAY-0018",
+      "orderId": "ord-025",
+      "amount": 1345000,
+      "method": "TRANSFER",
+      "date": "2025-04-26T14:00:00.000Z",
+      "notes": "Lunas"
+    }
+  ],
+  "expenses": [
+    {
+      "id": "exp-001",
+      "category": "Operasional",
+      "description": "Beli kantong plastik",
+      "amount": 250000,
+      "date": "2025-01-28T10:00:00.000Z"
+    },
+    {
+      "id": "exp-002",
+      "category": "Transportasi",
+      "description": "Bensin pengiriman",
+      "amount": 450000,
+      "date": "2025-02-01T10:00:00.000Z"
+    },
+    {
+      "id": "exp-003",
+      "category": "Sewa",
+      "description": "Sewa gudang bulan Februari",
+      "amount": 1500000,
+      "date": "2025-02-01T10:00:00.000Z"
+    },
+    {
+      "id": "exp-004",
+      "category": "Gaji",
+      "description": "Gaji karyawan bulan Februari",
+      "amount": 2500000,
+      "date": "2025-02-25T10:00:00.000Z"
+    },
+    {
+      "id": "exp-005",
+      "category": "Listrik & Air",
+      "description": "Tagihan listrik Februari",
+      "amount": 350000,
+      "date": "2025-02-28T10:00:00.000Z"
+    },
+    {
+      "id": "exp-006",
+      "category": "Transportasi",
+      "description": "Sewa motor pengiriman",
+      "amount": 500000,
+      "date": "2025-03-01T10:00:00.000Z"
+    },
+    {
+      "id": "exp-007",
+      "category": "Operasional",
+      "description": "ATK kantor",
+      "amount": 150000,
+      "date": "2025-03-05T10:00:00.000Z"
+    },
+    {
+      "id": "exp-008",
+      "category": "Sewa",
+      "description": "Sewa toko bulan Maret",
+      "amount": 2000000,
+      "date": "2025-03-01T10:00:00.000Z"
+    },
+    {
+      "id": "exp-009",
+      "category": "Beli Stok",
+      "description": "Pembelian stok mingguan",
+      "amount": 3500000,
+      "date": "2025-03-10T10:00:00.000Z"
+    },
+    {
+      "id": "exp-010",
+      "category": "Gaji",
+      "description": "Gaji karyawan bulan Maret",
+      "amount": 2500000,
+      "date": "2025-03-25T10:00:00.000Z"
+    },
+    {
+      "id": "exp-011",
+      "category": "Listrik & Air",
+      "description": "Tagihan listrik Maret",
+      "amount": 380000,
+      "date": "2025-03-28T10:00:00.000Z"
+    },
+    {
+      "id": "exp-012",
+      "category": "Operasional",
+      "description": "Beli kantong plastik",
+      "amount": 250000,
+      "date": "2025-04-01T10:00:00.000Z"
+    },
+    {
+      "id": "exp-013",
+      "category": "Transportasi",
+      "description": "Bensin pengiriman April",
+      "amount": 500000,
+      "date": "2025-04-05T10:00:00.000Z"
+    },
+    {
+      "id": "exp-014",
+      "category": "Sewa",
+      "description": "Sewa gudang bulan April",
+      "amount": 1500000,
+      "date": "2025-04-01T10:00:00.000Z"
+    },
+    {
+      "id": "exp-015",
+      "category": "Beli Stok",
+      "description": "Pembelian stok awal April",
+      "amount": 5000000,
+      "date": "2025-04-02T10:00:00.000Z"
+    },
+    {
+      "id": "exp-016",
+      "category": "Gaji",
+      "description": "Gaji karyawan bulan April",
+      "amount": 2500000,
+      "date": "2025-04-25T10:00:00.000Z"
+    },
+    {
+      "id": "exp-017",
+      "category": "Listrik & Air",
+      "description": "Tagihan PDAM April",
+      "amount": 150000,
+      "date": "2025-04-10T10:00:00.000Z"
+    },
+    {
+      "id": "exp-018",
+      "category": "Lainnya",
+      "description": "Perizinan usaha",
+      "amount": 500000,
+      "date": "2025-04-15T10:00:00.000Z"
+    },
+    {
+      "id": "exp-019",
+      "category": "Operasional",
+      "description": "Printer ink",
+      "amount": 200000,
+      "date": "2025-04-18T10:00:00.000Z"
+    },
+    {
+      "id": "exp-020",
+      "category": "Perlengkapan",
+      "description": "Timbangan baru",
+      "amount": 350000,
+      "date": "2025-04-20T10:00:00.000Z"
+    },
+    {
+      "id": "exp-1777031492150",
+      "category": "Operasional",
+      "description": "Test expense",
+      "amount": 50000,
+      "date": "2025-04-26T10:00:00.000Z"
+    }
+  ],
+  "stockHistory": [
+    {
+      "id": "sh-001",
+      "productId": "prod-001",
+      "type": "IN",
+      "quantity": 50,
+      "note": "Restok dari supplier",
+      "createdAt": "2025-03-15T08:00:00.000Z"
+    },
+    {
+      "id": "sh-002",
+      "productId": "prod-006",
+      "type": "IN",
+      "quantity": 100,
+      "note": "Restok dari supplier",
+      "createdAt": "2025-03-20T08:00:00.000Z"
+    },
+    {
+      "id": "sh-003",
+      "productId": "prod-009",
+      "type": "IN",
+      "quantity": 50,
+      "note": "Restok dari supplier",
+      "createdAt": "2025-03-25T08:00:00.000Z"
+    },
+    {
+      "id": "sh-004",
+      "productId": "prod-014",
+      "type": "IN",
+      "quantity": 20,
+      "note": "Restok dari distributor",
+      "createdAt": "2025-04-01T08:00:00.000Z"
+    },
+    {
+      "id": "sh-005",
+      "productId": "prod-028",
+      "type": "IN",
+      "quantity": 50,
+      "note": "Restok dari supplier",
+      "createdAt": "2025-04-05T08:00:00.000Z"
+    }
+  ]
+}

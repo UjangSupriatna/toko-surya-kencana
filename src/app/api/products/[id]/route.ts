@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
+import { readData, writeData } from '@/lib/json-db'
+import type { StockHistory } from '@/lib/types'
 
 export async function GET(
   _request: NextRequest,
@@ -7,14 +8,8 @@ export async function GET(
 ) {
   try {
     const { id } = await params
-    const product = await db.product.findUnique({
-      where: { id },
-      include: {
-        _count: {
-          select: { orderItems: true, stockHistory: true },
-        },
-      },
-    })
+    const data = await readData()
+    const product = data.products.find(p => p.id === id)
 
     if (!product) {
       return NextResponse.json(
@@ -23,7 +18,22 @@ export async function GET(
       )
     }
 
-    return NextResponse.json({ data: product })
+    const stockHistory = data.stockHistory.filter(sh => sh.productId === id)
+    const usedInOrders = data.orders.some(o =>
+      o.items.some(item => item.productId === id)
+    )
+
+    return NextResponse.json({
+      data: {
+        ...product,
+        stockHistory,
+        _count: {
+          orderItems: data.orders.reduce((sum, o) =>
+            sum + o.items.filter(i => i.productId === id).length, 0),
+          stockHistory: stockHistory.length,
+        },
+      },
+    })
   } catch (error) {
     console.error('Error getting product:', error)
     return NextResponse.json(
@@ -39,9 +49,10 @@ export async function PUT(
 ) {
   try {
     const { id } = await params
-    const existing = await db.product.findUnique({ where: { id } })
+    const data = await readData()
+    const idx = data.products.findIndex(p => p.id === id)
 
-    if (!existing) {
+    if (idx === -1) {
       return NextResponse.json(
         { error: 'Produk tidak ditemukan' },
         { status: 404 }
@@ -58,33 +69,34 @@ export async function PUT(
       )
     }
 
+    const existing = data.products[idx]
+
     // Check if stock changed, create StockHistory entry
     if (stock !== undefined && stock !== existing.stock) {
       const diff = stock - existing.stock
-      await db.stockHistory.create({
-        data: {
-          productId: id,
-          type: diff > 0 ? 'IN' : 'OUT',
-          quantity: Math.abs(diff),
-          note: 'Stok diperbarui secara manual',
-        },
-      })
+      const entry: StockHistory = {
+        id: `sh-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+        productId: id,
+        type: diff > 0 ? 'IN' : 'OUT',
+        quantity: Math.abs(diff),
+        note: 'Stok diperbarui secara manual',
+        createdAt: new Date().toISOString(),
+      }
+      data.stockHistory.unshift(entry)
     }
 
-    const product = await db.product.update({
-      where: { id },
-      data: {
-        ...(name !== undefined && { name }),
-        ...(category !== undefined && { category }),
-        ...(unit !== undefined && { unit }),
-        ...(buyPrice !== undefined && { buyPrice: Math.round(buyPrice) }),
-        ...(sellPrice !== undefined && { sellPrice: Math.round(sellPrice) }),
-        ...(stock !== undefined && { stock }),
-        ...(minStock !== undefined && { minStock }),
-      },
-    })
+    if (name !== undefined) existing.name = name
+    if (category !== undefined) existing.category = category
+    if (unit !== undefined) existing.unit = unit
+    if (buyPrice !== undefined) existing.buyPrice = Math.round(buyPrice)
+    if (sellPrice !== undefined) existing.sellPrice = Math.round(sellPrice)
+    if (stock !== undefined) existing.stock = stock
+    if (minStock !== undefined) existing.minStock = minStock
 
-    return NextResponse.json({ data: product })
+    data.products[idx] = existing
+    await writeData(data)
+
+    return NextResponse.json({ data: existing })
   } catch (error) {
     console.error('Error updating product:', error)
     return NextResponse.json(
@@ -100,26 +112,29 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params
-    const existing = await db.product.findUnique({
-      where: { id },
-      include: { orderItems: true },
-    })
+    const data = await readData()
+    const idx = data.products.findIndex(p => p.id === id)
 
-    if (!existing) {
+    if (idx === -1) {
       return NextResponse.json(
         { error: 'Produk tidak ditemukan' },
         { status: 404 }
       )
     }
 
-    if (existing.orderItems.length > 0) {
+    const usedInOrders = data.orders.some(o =>
+      o.items.some(item => item.productId === id)
+    )
+
+    if (usedInOrders) {
       return NextResponse.json(
         { error: 'Produk tidak dapat dihapus karena sudah digunakan dalam pesanan' },
         { status: 400 }
       )
     }
 
-    await db.product.delete({ where: { id } })
+    data.products.splice(idx, 1)
+    await writeData(data)
 
     return NextResponse.json({ message: 'Produk berhasil dihapus' })
   } catch (error) {

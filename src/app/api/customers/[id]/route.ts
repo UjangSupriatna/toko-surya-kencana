@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
+import { readData, writeData } from '@/lib/json-db'
 
 export async function GET(
   _request: NextRequest,
@@ -7,18 +7,8 @@ export async function GET(
 ) {
   try {
     const { id } = await params
-    const customer = await db.customer.findUnique({
-      where: { id },
-      include: {
-        _count: {
-          select: { orders: true },
-        },
-        orders: {
-          take: 5,
-          orderBy: { createdAt: 'desc' },
-        },
-      },
-    })
+    const data = await readData()
+    const customer = data.customers.find(c => c.id === id)
 
     if (!customer) {
       return NextResponse.json(
@@ -27,7 +17,20 @@ export async function GET(
       )
     }
 
-    return NextResponse.json({ data: customer })
+    const customerOrders = data.orders
+      .filter(o => o.customerId === id)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .slice(0, 5)
+
+    return NextResponse.json({
+      data: {
+        ...customer,
+        _count: {
+          orders: data.orders.filter(o => o.customerId === id).length,
+        },
+        orders: customerOrders,
+      },
+    })
   } catch (error) {
     console.error('Error getting customer:', error)
     return NextResponse.json(
@@ -43,9 +46,10 @@ export async function PUT(
 ) {
   try {
     const { id } = await params
-    const existing = await db.customer.findUnique({ where: { id } })
+    const data = await readData()
+    const idx = data.customers.findIndex(c => c.id === id)
 
-    if (!existing) {
+    if (idx === -1) {
       return NextResponse.json(
         { error: 'Pelanggan tidak ditemukan' },
         { status: 404 }
@@ -79,15 +83,14 @@ export async function PUT(
       }
     }
 
-    const customer = await db.customer.update({
-      where: { id },
-      data: {
-        ...(name !== undefined && { name }),
-        ...(phone !== undefined && { phone }),
-        ...(address !== undefined && { address: address || null }),
-        ...(type !== undefined && { type }),
-      },
-    })
+    const customer = data.customers[idx]
+    if (name !== undefined) customer.name = name
+    if (phone !== undefined) customer.phone = phone
+    if (address !== undefined) customer.address = address || null
+    if (type !== undefined) customer.type = type
+
+    data.customers[idx] = customer
+    await writeData(data)
 
     return NextResponse.json({ data: customer })
   } catch (error) {
@@ -105,26 +108,27 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params
-    const existing = await db.customer.findUnique({
-      where: { id },
-      include: { orders: true },
-    })
+    const data = await readData()
+    const idx = data.customers.findIndex(c => c.id === id)
 
-    if (!existing) {
+    if (idx === -1) {
       return NextResponse.json(
         { error: 'Pelanggan tidak ditemukan' },
         { status: 404 }
       )
     }
 
-    if (existing.orders.length > 0) {
+    const hasOrders = data.orders.some(o => o.customerId === id)
+
+    if (hasOrders) {
       return NextResponse.json(
         { error: 'Pelanggan tidak dapat dihapus karena memiliki pesanan' },
         { status: 400 }
       )
     }
 
-    await db.customer.delete({ where: { id } })
+    data.customers.splice(idx, 1)
+    await writeData(data)
 
     return NextResponse.json({ message: 'Pelanggan berhasil dihapus' })
   } catch (error) {

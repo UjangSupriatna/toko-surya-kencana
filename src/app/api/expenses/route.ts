@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
+import { readData, writeData } from '@/lib/json-db'
+import type { Expense } from '@/lib/types'
 
 export async function GET(request: NextRequest) {
   try {
@@ -8,28 +9,25 @@ export async function GET(request: NextRequest) {
     const from = searchParams.get('from') || ''
     const to = searchParams.get('to') || ''
 
-    const where: Record<string, unknown> = {}
+    const data = await readData()
+    let expenses = [...data.expenses]
 
     if (category) {
-      where.category = category
+      expenses = expenses.filter(e => e.category === category)
     }
 
-    if (from || to) {
-      where.date = {}
-      if (from) {
-        (where.date as Record<string, unknown>).gte = new Date(from)
-      }
-      if (to) {
-        const endDate = new Date(to)
-        endDate.setHours(23, 59, 59, 999)
-        ;(where.date as Record<string, unknown>).lte = endDate
-      }
+    if (from) {
+      const fromDate = new Date(from)
+      expenses = expenses.filter(e => new Date(e.date) >= fromDate)
+    }
+    if (to) {
+      const toDate = new Date(to)
+      toDate.setHours(23, 59, 59, 999)
+      expenses = expenses.filter(e => new Date(e.date) <= toDate)
     }
 
-    const expenses = await db.expense.findMany({
-      where,
-      orderBy: { date: 'desc' },
-    })
+    // Sort by date desc
+    expenses.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
     return NextResponse.json({ data: expenses })
   } catch (error) {
@@ -60,16 +58,19 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const expense = await db.expense.create({
-      data: {
-        category,
-        description,
-        amount: Math.round(amount),
-        date: new Date(date),
-      },
-    })
+    const data = await readData()
+    const newExpense: Expense = {
+      id: `exp-${Date.now()}`,
+      category,
+      description,
+      amount: Math.round(amount),
+      date: new Date(date).toISOString(),
+    }
 
-    return NextResponse.json({ data: expense }, { status: 201 })
+    data.expenses.push(newExpense)
+    await writeData(data)
+
+    return NextResponse.json({ data: newExpense }, { status: 201 })
   } catch (error) {
     console.error('Error creating expense:', error)
     return NextResponse.json(

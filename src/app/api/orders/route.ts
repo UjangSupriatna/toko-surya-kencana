@@ -1,20 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
+import { readData, writeData } from '@/lib/json-db'
+import type { Order, OrderItem, StockHistory } from '@/lib/types'
 
-function generateOrderNumber(): string {
+function generateOrderNumber(data: Order[]): string {
   const now = new Date()
   const year = now.getFullYear().toString().slice(-2)
   const month = (now.getMonth() + 1).toString().padStart(2, '0')
 
-  // Get the latest order to determine sequence
-  const prefix = `ORD-${year}${month}`
-  // We'll use a timestamp-based approach for uniqueness
   const seq = now.getDate().toString().padStart(2, '0') +
     now.getHours().toString().padStart(2, '0') +
     now.getMinutes().toString().padStart(2, '0') +
     now.getSeconds().toString().padStart(2, '0')
 
-  return `${prefix}-${seq}`
+  return `ORD-${seq}-${month}${year}`
 }
 
 export async function GET(request: NextRequest) {
@@ -24,39 +22,43 @@ export async function GET(request: NextRequest) {
     const from = searchParams.get('from') || ''
     const to = searchParams.get('to') || ''
 
-    const where: Record<string, unknown> = {}
+    const data = await readData()
+    let orders = [...data.orders]
 
     if (status) {
-      where.status = status
+      orders = orders.filter(o => o.status === status)
     }
 
-    if (from || to) {
-      where.createdAt = {}
-      if (from) {
-        (where.createdAt as Record<string, unknown>).gte = new Date(from)
-      }
-      if (to) {
-        // Include the entire end date
-        const endDate = new Date(to)
-        endDate.setHours(23, 59, 59, 999)
-        ;(where.createdAt as Record<string, unknown>).lte = endDate
-      }
+    if (from) {
+      const fromDate = new Date(from)
+      orders = orders.filter(o => new Date(o.createdAt) >= fromDate)
+    }
+    if (to) {
+      const toDate = new Date(to)
+      toDate.setHours(23, 59, 59, 999)
+      orders = orders.filter(o => new Date(o.createdAt) <= toDate)
     }
 
-    const orders = await db.order.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-      include: {
-        customer: true,
-        items: {
-          include: {
-            product: true,
-          },
-        },
-      },
+    // Sort by createdAt desc
+    orders.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+
+    // Enrich with customer info and product info in items
+    const enrichedOrders = orders.map(order => {
+      const customer = data.customers.find(c => c.id === order.customerId)
+      const enrichedItems = order.items.map(item => {
+        const product = data.products.find(p => p.id === item.productId)
+        return { ...item, product: product || null }
+      })
+      const paymentsCount = data.payments.filter(p => p.orderId === order.id).length
+      return {
+        ...order,
+        customer: customer || null,
+        items: enrichedItems,
+        _count: { payments: paymentsCount },
+      }
     })
 
-    return NextResponse.json({ data: orders })
+    return NextResponse.json({ data: enrichedOrders })
   } catch (error) {
     console.error('Error listing orders:', error)
     return NextResponse.json(
@@ -85,11 +87,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate customer exists
-    const customer = await db.customer.findUnique({
-      where: { id: customerId },
-    })
+    const data = await readData()
 
+    // Validate customer exists
+    const customer = data.customers.find(c => c.id === customerId)
     if (!customer) {
       return NextResponse.json(
         { error: 'Pelanggan tidak ditemukan' },
@@ -99,7 +100,8 @@ export async function POST(request: NextRequest) {
 
     // Validate all products and calculate totals
     let totalAmount = 0
-    const orderItemsData = []
+    const orderItemsData: OrderItem[] = []
+    const now = new Date().toISOString()
 
     for (const item of items) {
       if (!item.productId || !item.quantity || item.quantity <= 0) {
@@ -109,10 +111,7 @@ export async function POST(request: NextRequest) {
         )
       }
 
-      const product = await db.product.findUnique({
-        where: { id: item.productId },
-      })
-
+      const product = data.products.find(p => p.id === item.productId)
       if (!product) {
         return NextResponse.json(
           { error: `Produk dengan ID ${item.productId} tidak ditemukan` },
@@ -132,6 +131,7 @@ export async function POST(request: NextRequest) {
       totalAmount += subtotal
 
       orderItemsData.push({
+        id: `oi-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
         productId: item.productId,
         quantity: item.quantity,
         price: Math.round(price),
@@ -139,50 +139,51 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Create order with items in a transaction
-    const order = await db.$transaction(async (tx) => {
-      const newOrder = await tx.order.create({
-        data: {
-          orderNumber: generateOrderNumber(),
-          customerId,
-          status: 'PENDING',
-          notes: notes || null,
-          totalAmount: Math.round(totalAmount),
-          items: {
-            create: orderItemsData,
-          },
-        },
-        include: {
-          customer: true,
-          items: {
-            include: {
-              product: true,
-            },
-          },
-        },
+    const orderNumber = generateOrderNumber(data.orders)
+
+    const newOrder: Order = {
+      id: `ord-${Date.now()}`,
+      orderNumber,
+      customerId,
+      status: 'PENDING',
+      notes: notes || null,
+      totalAmount: Math.round(totalAmount),
+      createdAt: now,
+      updatedAt: now,
+      items: orderItemsData,
+    }
+
+    // Deduct stock and create stock history entries
+    const newStockHistory: StockHistory[] = []
+    for (const item of orderItemsData) {
+      const product = data.products.find(p => p.id === item.productId)!
+      product.stock -= item.quantity
+
+      newStockHistory.push({
+        id: `sh-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+        productId: item.productId,
+        type: 'OUT',
+        quantity: item.quantity,
+        note: `Pesanan ${orderNumber}`,
+        createdAt: now,
       })
+    }
 
-      // Deduct stock and create stock history entries
-      for (const item of orderItemsData) {
-        await tx.product.update({
-          where: { id: item.productId },
-          data: { stock: { decrement: item.quantity } },
-        })
+    data.orders.unshift(newOrder)
+    data.stockHistory.unshift(...newStockHistory)
+    await writeData(data)
 
-        await tx.stockHistory.create({
-          data: {
-            productId: item.productId,
-            type: 'OUT',
-            quantity: item.quantity,
-            note: `Pesanan ${newOrder.orderNumber}`,
-          },
-        })
-      }
+    // Return enriched order
+    const enrichedOrder = {
+      ...newOrder,
+      customer,
+      items: newOrder.items.map(item => ({
+        ...item,
+        product: data.products.find(p => p.id === item.productId) || null,
+      })),
+    }
 
-      return newOrder
-    })
-
-    return NextResponse.json({ data: order }, { status: 201 })
+    return NextResponse.json({ data: enrichedOrder }, { status: 201 })
   } catch (error) {
     console.error('Error creating order:', error)
     return NextResponse.json(

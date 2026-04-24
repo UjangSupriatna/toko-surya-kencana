@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
+import { readData, writeData } from '@/lib/json-db'
 
 export async function PUT(
   request: NextRequest,
@@ -7,9 +7,10 @@ export async function PUT(
 ) {
   try {
     const { id } = await params
-    const existing = await db.expense.findUnique({ where: { id } })
+    const data = await readData()
+    const idx = data.expenses.findIndex(e => e.id === id)
 
-    if (!existing) {
+    if (idx === -1) {
       return NextResponse.json(
         { error: 'Pengeluaran tidak ditemukan' },
         { status: 404 }
@@ -40,15 +41,14 @@ export async function PUT(
       )
     }
 
-    const expense = await db.expense.update({
-      where: { id },
-      data: {
-        ...(category !== undefined && { category }),
-        ...(description !== undefined && { description }),
-        ...(amount !== undefined && { amount: Math.round(amount) }),
-        ...(date !== undefined && { date: new Date(date) }),
-      },
-    })
+    const expense = data.expenses[idx]
+    if (category !== undefined) expense.category = category
+    if (description !== undefined) expense.description = description
+    if (amount !== undefined) expense.amount = Math.round(amount)
+    if (date !== undefined) expense.date = new Date(date).toISOString()
+
+    data.expenses[idx] = expense
+    await writeData(data)
 
     return NextResponse.json({ data: expense })
   } catch (error) {
@@ -66,16 +66,18 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params
-    const existing = await db.expense.findUnique({ where: { id } })
+    const data = await readData()
+    const idx = data.expenses.findIndex(e => e.id === id)
 
-    if (!existing) {
+    if (idx === -1) {
       return NextResponse.json(
         { error: 'Pengeluaran tidak ditemukan' },
         { status: 404 }
       )
     }
 
-    await db.expense.delete({ where: { id } })
+    data.expenses.splice(idx, 1)
+    await writeData(data)
 
     return NextResponse.json({ message: 'Pengeluaran berhasil dihapus' })
   } catch (error) {

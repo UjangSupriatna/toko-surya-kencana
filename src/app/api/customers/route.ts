@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
+import { readData, writeData } from '@/lib/json-db'
+import type { Customer } from '@/lib/types'
 
 export async function GET(request: NextRequest) {
   try {
@@ -7,29 +8,33 @@ export async function GET(request: NextRequest) {
     const q = searchParams.get('q') || ''
     const type = searchParams.get('type') || ''
 
-    const where: Record<string, unknown> = {}
+    const data = await readData()
+    let customers = [...data.customers]
+
     if (q) {
-      where.OR = [
-        { name: { contains: q } },
-        { phone: { contains: q } },
-        { address: { contains: q } },
-      ]
+      const lower = q.toLowerCase()
+      customers = customers.filter(c =>
+        c.name.toLowerCase().includes(lower) ||
+        c.phone.toLowerCase().includes(lower) ||
+        (c.address && c.address.toLowerCase().includes(lower))
+      )
     }
     if (type) {
-      where.type = type
+      customers = customers.filter(c => c.type === type)
     }
 
-    const customers = await db.customer.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-      include: {
-        _count: {
-          select: { orders: true },
-        },
-      },
-    })
+    // Sort by createdAt desc
+    customers.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
 
-    return NextResponse.json({ data: customers })
+    // Include order count
+    const customersWithCount = customers.map(c => ({
+      ...c,
+      _count: {
+        orders: data.orders.filter(o => o.customerId === c.id).length,
+      },
+    }))
+
+    return NextResponse.json({ data: customersWithCount })
   } catch (error) {
     console.error('Error listing customers:', error)
     return NextResponse.json(
@@ -59,16 +64,20 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const customer = await db.customer.create({
-      data: {
-        name,
-        phone,
-        address: address || null,
-        type: type || 'DAPUR',
-      },
-    })
+    const data = await readData()
+    const newCustomer: Customer = {
+      id: `cust-${Date.now()}`,
+      name,
+      phone,
+      address: address || null,
+      type: type || 'DAPUR',
+      createdAt: new Date().toISOString(),
+    }
 
-    return NextResponse.json({ data: customer }, { status: 201 })
+    data.customers.push(newCustomer)
+    await writeData(data)
+
+    return NextResponse.json({ data: newCustomer }, { status: 201 })
   } catch (error) {
     console.error('Error creating customer:', error)
     return NextResponse.json(

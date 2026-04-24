@@ -1,43 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
+import { readData, writeData } from '@/lib/json-db'
+import type { Product } from '@/lib/types'
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const q = searchParams.get('q') || ''
     const category = searchParams.get('category') || ''
-    const page = parseInt(searchParams.get('page') || '1')
-    const limit = parseInt(searchParams.get('limit') || '20')
 
-    const where: Record<string, unknown> = {}
+    const data = await readData()
+    let products = [...data.products]
+
     if (q) {
-      where.name = { contains: q }
+      const lower = q.toLowerCase()
+      products = products.filter(p => p.name.toLowerCase().includes(lower))
     }
     if (category) {
-      where.category = category
+      products = products.filter(p => p.category === category)
     }
 
-    const skip = (page - 1) * limit
-
-    const [products, total] = await Promise.all([
-      db.product.findMany({
-        where,
-        skip,
-        take: limit,
-        orderBy: { createdAt: 'desc' },
-      }),
-      db.product.count({ where }),
-    ])
-
-    return NextResponse.json({
-      data: products,
-      pagination: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
-      },
-    })
+    return NextResponse.json({ data: products })
   } catch (error) {
     console.error('Error listing products:', error)
     return NextResponse.json(
@@ -73,19 +55,22 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const product = await db.product.create({
-      data: {
-        name,
-        category,
-        unit,
-        buyPrice: Math.round(buyPrice),
-        sellPrice: Math.round(sellPrice),
-        stock: typeof stock === 'number' ? stock : 0,
-        minStock: typeof minStock === 'number' ? minStock : 10,
-      },
-    })
+    const data = await readData()
+    const newProduct: Product = {
+      id: `prod-${Date.now()}`,
+      name,
+      category,
+      unit,
+      buyPrice: Math.round(buyPrice),
+      sellPrice: Math.round(sellPrice),
+      stock: typeof stock === 'number' ? stock : 0,
+      minStock: typeof minStock === 'number' ? minStock : 10,
+    }
 
-    return NextResponse.json({ data: product }, { status: 201 })
+    data.products.push(newProduct)
+    await writeData(data)
+
+    return NextResponse.json({ data: newProduct }, { status: 201 })
   } catch (error) {
     console.error('Error creating product:', error)
     return NextResponse.json(
